@@ -1,16 +1,36 @@
 ﻿namespace TeslaService.Web.Controllers
 {
     using System.Diagnostics;
-
-    using TeslaService.Web.ViewModels;
+    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
+    using TeslaService.Data;
+    using TeslaService.Web.ViewModels;
+    using TeslaService.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var userRegisterCount = this.db.Users.Count();
+            var vehicleRegisterCount = this.db.Vehicles.Count();
+            var countParts = this.db.Parts.Count();
+
+            var info = new IndexViewModel()
+            {
+                UserRegisterCount = userRegisterCount,
+                VehicleRegisterCount = vehicleRegisterCount,
+                CountParts = countParts,
+            };
+
+            return this.View(info);
         }
 
         public IActionResult Privacy()

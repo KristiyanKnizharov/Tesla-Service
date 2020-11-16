@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using TeslaService.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using TeslaService.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

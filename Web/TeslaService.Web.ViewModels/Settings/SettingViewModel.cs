@@ -1,9 +1,8 @@
 ﻿namespace TeslaService.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using TeslaService.Data.Models;
     using TeslaService.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

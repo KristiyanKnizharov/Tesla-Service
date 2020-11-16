@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TeslaService.Data.Common\TeslaService.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\TeslaService.Data.Models\TeslaService.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\TeslaService.Web.ViewModels\TeslaService.Web.ViewModels.csproj" />
     <ProjectReference Include="..\TeslaService.Services.Mapping\TeslaService.Services.Mapping.csproj" />
   </ItemGroup>
 

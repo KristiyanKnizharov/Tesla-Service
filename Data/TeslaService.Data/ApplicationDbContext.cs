@@ -6,11 +6,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    using TeslaService.Data.Common.Models;
-    using TeslaService.Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using TeslaService.Data.Common.Models;
+    using TeslaService.Data.Models;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -25,6 +24,20 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Vehicle> Vehicles { get; set; }
+
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<Insurance> Insurances { get; set; }
+
+        public DbSet<Warehouse> Warehouses { get; set; }
+
+        public DbSet<Part> Parts { get; set; }
+
+        public DbSet<Battery> Batteries { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -72,6 +85,11 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+            builder.Entity<Service>()
+                .HasOne(s => s.Warehouse)
+                .WithOne(w => w.Service)
+                .HasForeignKey<Warehouse>(i => i.ServiceId);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

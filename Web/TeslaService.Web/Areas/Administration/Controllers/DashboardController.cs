@@ -1,9 +1,8 @@
 ﻿namespace TeslaService.Web.Areas.Administration.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
     using TeslaService.Services.Data;
     using TeslaService.Web.ViewModels.Administration.Dashboard;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdministrationController
     {

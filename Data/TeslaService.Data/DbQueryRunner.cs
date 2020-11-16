@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using TeslaService.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using TeslaService.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

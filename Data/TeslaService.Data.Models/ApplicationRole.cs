@@ -3,9 +3,8 @@ namespace TeslaService.Data.Models
 {
     using System;
 
-    using TeslaService.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using TeslaService.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

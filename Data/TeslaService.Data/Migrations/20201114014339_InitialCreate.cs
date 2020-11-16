@@ -45,6 +45,8 @@
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -53,6 +55,50 @@
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Batteries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Status = table.Column<int>(nullable: false),
+                    Range = table.Column<int>(maxLength: 5, nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Batteries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Insurances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VinNumber = table.Column<string>(maxLength: 30, nullable: true),
+                    DateOfStart = table.Column<DateTime>(nullable: false),
+                    DateOfEnd = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Insurances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WarehouseId = table.Column<int>(nullable: false),
+                    VehicleId = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -179,6 +225,130 @@
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Position = table.Column<string>(nullable: false),
+                    ImageURL = table.Column<string>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vehicles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    VehicleModel = table.Column<int>(nullable: false),
+                    VehicleType = table.Column<int>(nullable: false),
+                    ImageURL = table.Column<string>(nullable: false),
+                    DateOfPurchase = table.Column<DateTime>(nullable: false),
+                    SoftwareVersion = table.Column<string>(maxLength: 20, nullable: false),
+                    Mileage = table.Column<double>(maxLength: 10, nullable: false),
+                    HorsePower = table.Column<int>(maxLength: 5, nullable: false),
+                    KilowattHour = table.Column<int>(maxLength: 5, nullable: false),
+                    BatteryId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    InsuranceId = table.Column<int>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Batteries_BatteryId",
+                        column: x => x.BatteryId,
+                        principalTable: "Batteries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Insurances_InsuranceId",
+                        column: x => x.InsuranceId,
+                        principalTable: "Insurances",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Warehouses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ServiceId = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warehouses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Warehouses_Services_ServiceId",
+                        column: x => x.ServiceId,
+                        principalTable: "Services",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Parts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    VehicleId = table.Column<int>(nullable: true),
+                    WarehouseId = table.Column<int>(nullable: true),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Parts_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Parts_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -229,9 +399,50 @@
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_ServiceId",
+                table: "Employees",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parts_VehicleId",
+                table: "Parts",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Parts_WarehouseId",
+                table: "Parts",
+                column: "WarehouseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_BatteryId",
+                table: "Vehicles",
+                column: "BatteryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_InsuranceId",
+                table: "Vehicles",
+                column: "InsuranceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_ServiceId",
+                table: "Vehicles",
+                column: "ServiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_UserId",
+                table: "Vehicles",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warehouses_ServiceId",
+                table: "Warehouses",
+                column: "ServiceId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -252,13 +463,34 @@
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Parts");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "Warehouses");
+
+            migrationBuilder.DropTable(
+                name: "Batteries");
+
+            migrationBuilder.DropTable(
+                name: "Insurances");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Services");
         }
     }
 }

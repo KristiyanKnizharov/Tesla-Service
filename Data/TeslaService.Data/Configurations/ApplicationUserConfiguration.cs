@@ -1,8 +1,8 @@
 ﻿namespace TeslaService.Data.Configurations
 {
-    using TeslaService.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using TeslaService.Data.Models;
 
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {

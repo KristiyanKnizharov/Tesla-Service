@@ -3,12 +3,11 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc;
     using TeslaService.Data.Common.Repositories;
     using TeslaService.Data.Models;
     using TeslaService.Services.Data;
     using TeslaService.Web.ViewModels.Settings;
-
-    using Microsoft.AspNetCore.Mvc;
 
     public class SettingsController : BaseController
     {
