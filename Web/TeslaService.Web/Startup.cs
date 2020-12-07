@@ -17,6 +17,8 @@
     using TeslaService.Data.Repositories;
     using TeslaService.Data.Seeding;
     using TeslaService.Services.Data;
+    using TeslaService.Services.Data.Common;
+    using TeslaService.Services.Data.Contracts;
     using TeslaService.Services.Mapping;
     using TeslaService.Services.Messaging;
     using TeslaService.Web.ViewModels;
@@ -63,6 +65,12 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<PartService>();
+            services.AddTransient<HomeService>();
+            services.AddTransient<IVehicleService, VehicleService>();
+            services.AddTransient<IServiceService, ServiceService>();
+            services.AddTransient<WarehouseService>();
+            services.AddTransient<IEmployeeService, EmployeeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

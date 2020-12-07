@@ -1,0 +1,42 @@
+﻿@using TeslaService.Web.ViewModels.Employee
+@model EmployeeModel
+
+@{
+    ViewData["Title"] = "Hire Employee";
+}
+
+@*<h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i> Create Vehicle</h1>*@
+
+<br />
+
+<form method="post" class="col-md-6 offset-md-3"
+      enctype="multipart/form-data">
+    <h1>@this.ViewData["Title"]</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control"/>
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control"/>
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageURL"></label>
+        <input asp-for="ImageURL" class="form-control"/>
+        <span asp-validation-for="ImageURL" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Position"></label>
+        <input asp-for="Position" class="form-control"/>
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ServiceId"></label>
+        <input asp-for="ServiceId" value="1"  class="form-control" />
+        <span asp-validation-for="ServiceId" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>

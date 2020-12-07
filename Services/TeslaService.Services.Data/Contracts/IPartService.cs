@@ -1,7 +1,6 @@
 ﻿namespace TeslaService.Services.Data.Common
 {
     using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     using TeslaService.Web.ViewModels.Parts;
 
@@ -9,15 +8,15 @@
     {
         void CreatePartAsync(string partName, double price);
 
-        void DelatePartAsync(string partName);
+        void DeletePartAsync(string partName);
 
         void AddPartAsync(string partName);
 
         void RemovePartAsync(string partName);
 
-        bool IsItPartCreate(string partName);
+        bool IsItPartCreated(string partName);
 
-        ICollection<PartModel> GetAllParts();
+        IEnumerable<PartModel> GetAllParts();
 
         int CountParts(string name);
     }

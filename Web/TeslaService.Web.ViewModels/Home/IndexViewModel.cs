@@ -2,10 +2,10 @@
 {
     public class IndexViewModel
     {
-        public int UserRegisterCount { get; set; }
+        public int UsersCount { get; set; }
 
-        public int VehicleRegisterCount { get; set; }
+        public int VehiclesCount { get; set; }
 
-        public int CountParts { get; set; }
+        public int PartsCount { get; set; }
     }
 }

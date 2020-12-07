@@ -1,0 +1,32 @@
+﻿@using TeslaService.Web.Controllers
+@using TeslaService.Web.ViewModels.Parts
+@{
+    this.ViewData["Title"] = "All parts";
+    var partcontroller = this.Model;
+}
+
+<table class="table" style="border: 1px solid">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price(BGN)</th>
+            <th scope="col">Quantity</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PartModel part in Model)
+        {
+            <tr>
+                <th scope="row">@part.Id</th>
+                <td>@part.Name</td>
+                <td>@part.Price</td>
+                <td>@part.Quantity</td>
+                <td><button class="btn-dark" asp-controller="Part" asp-action="Add">Add</button></td>
+                <td><button class="btn-dark">Remove</button></td>
+            </tr>
+        }
+    </tbody>
+</table>

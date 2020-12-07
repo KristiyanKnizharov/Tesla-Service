@@ -1,9 +1,8 @@
-﻿namespace TeslaService.Data.Migrations
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace TeslaService.Data.Migrations
 {
-    using System;
-
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +18,7 @@
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    DeletedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,7 +49,7 @@
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    DeletedOn = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,10 +60,13 @@
                 name: "Batteries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    Range = table.Column<int>(maxLength: 5, nullable: false),
+                    SoftwareVersion = table.Column<string>(maxLength: 20, nullable: false),
+                    Mileage = table.Column<double>(maxLength: 10, nullable: false),
+                    HorsePower = table.Column<int>(maxLength: 5, nullable: false),
+                    KilowattHour = table.Column<int>(maxLength: 5, nullable: false),
+                    Range = table.Column<int>(maxLength: 5, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,12 +77,11 @@
                 name: "Insurances",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(nullable: false),
                     VinNumber = table.Column<string>(maxLength: 30, nullable: true),
-                    DateOfStart = table.Column<DateTime>(nullable: false),
-                    DateOfEnd = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    DateOfStart = table.Column<string>(nullable: true),
+                    DateOfEnd = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,7 +95,7 @@
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WarehouseId = table.Column<int>(nullable: false),
-                    VehicleId = table.Column<int>(nullable: false),
+                    VehicleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,7 +113,7 @@
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -127,7 +128,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -148,7 +149,7 @@
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,7 +169,7 @@
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -186,7 +187,7 @@
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -212,7 +213,7 @@
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true),
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,7 +236,7 @@
                     LastName = table.Column<string>(nullable: false),
                     Position = table.Column<string>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
-                    ServiceId = table.Column<int>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,36 +253,31 @@
                 name: "Vehicles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    Id = table.Column<string>(nullable: false),
                     VehicleModel = table.Column<int>(nullable: false),
                     VehicleType = table.Column<int>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
                     DateOfPurchase = table.Column<DateTime>(nullable: false),
-                    SoftwareVersion = table.Column<string>(maxLength: 20, nullable: false),
-                    Mileage = table.Column<double>(maxLength: 10, nullable: false),
-                    HorsePower = table.Column<int>(maxLength: 5, nullable: false),
-                    KilowattHour = table.Column<int>(maxLength: 5, nullable: false),
                     BatteryId = table.Column<int>(nullable: false),
+                    BatteryId1 = table.Column<string>(nullable: true),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     InsuranceId = table.Column<int>(nullable: false),
-                    ServiceId = table.Column<int>(nullable: false),
+                    InsuranceId1 = table.Column<string>(nullable: true),
+                    ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Batteries_BatteryId",
-                        column: x => x.BatteryId,
+                        name: "FK_Vehicles_Batteries_BatteryId1",
+                        column: x => x.BatteryId1,
                         principalTable: "Batteries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Insurances_InsuranceId",
-                        column: x => x.InsuranceId,
+                        name: "FK_Vehicles_Insurances_InsuranceId1",
+                        column: x => x.InsuranceId1,
                         principalTable: "Insurances",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -305,7 +301,7 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceId = table.Column<int>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -329,8 +325,8 @@
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    VehicleId = table.Column<int>(nullable: true),
-                    WarehouseId = table.Column<int>(nullable: true),
+                    VehicleId = table.Column<string>(nullable: true),
+                    WarehouseId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -419,14 +415,14 @@
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_BatteryId",
+                name: "IX_Vehicles_BatteryId1",
                 table: "Vehicles",
-                column: "BatteryId");
+                column: "BatteryId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_InsuranceId",
+                name: "IX_Vehicles_InsuranceId1",
                 table: "Vehicles",
-                column: "InsuranceId");
+                column: "InsuranceId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_ServiceId",

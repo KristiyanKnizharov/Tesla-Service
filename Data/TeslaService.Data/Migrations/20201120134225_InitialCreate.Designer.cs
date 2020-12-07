@@ -10,7 +10,7 @@ using TeslaService.Data;
 namespace TeslaService.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201114014339_InitialCreate")]
+    [Migration("20201120134225_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -253,14 +253,29 @@ namespace TeslaService.Data.Migrations
 
             modelBuilder.Entity("TeslaService.Data.Models.Battery", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("HorsePower")
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasMaxLength(5);
+
+                    b.Property<int>("KilowattHour")
+                        .HasColumnType("int")
+                        .HasMaxLength(5);
+
+                    b.Property<double>("Mileage")
+                        .HasColumnType("float")
+                        .HasMaxLength(10);
 
                     b.Property<int>("Range")
                         .HasColumnType("int")
                         .HasMaxLength(5);
+
+                    b.Property<string>("SoftwareVersion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -305,16 +320,14 @@ namespace TeslaService.Data.Migrations
 
             modelBuilder.Entity("TeslaService.Data.Models.Insurance", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("DateOfEnd")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateOfEnd")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfStart")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DateOfStart")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(200)")
@@ -352,8 +365,8 @@ namespace TeslaService.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<string>("VehicleId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("WarehouseId")
                         .HasColumnType("int");
@@ -419,16 +432,14 @@ namespace TeslaService.Data.Migrations
 
             modelBuilder.Entity("TeslaService.Data.Models.Vehicle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("BatteryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("BatteryId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateOfPurchase")
                         .HasColumnType("datetime2");
@@ -437,10 +448,6 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<int>("HorsePower")
-                        .HasColumnType("int")
-                        .HasMaxLength(5);
-
                     b.Property<string>("ImageURL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -448,24 +455,11 @@ namespace TeslaService.Data.Migrations
                     b.Property<int>("InsuranceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("KilowattHour")
-                        .HasColumnType("int")
-                        .HasMaxLength(5);
-
-                    b.Property<double>("Mileage")
-                        .HasColumnType("float")
-                        .HasMaxLength(10);
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("InsuranceId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("SoftwareVersion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -478,9 +472,9 @@ namespace TeslaService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BatteryId");
+                    b.HasIndex("BatteryId1");
 
-                    b.HasIndex("InsuranceId");
+                    b.HasIndex("InsuranceId1");
 
                     b.HasIndex("ServiceId");
 
@@ -582,15 +576,11 @@ namespace TeslaService.Data.Migrations
                 {
                     b.HasOne("TeslaService.Data.Models.Battery", "Battery")
                         .WithMany()
-                        .HasForeignKey("BatteryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("BatteryId1");
 
                     b.HasOne("TeslaService.Data.Models.Insurance", "Insurance")
                         .WithMany()
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("InsuranceId1");
 
                     b.HasOne("TeslaService.Data.Models.Service", "Service")
                         .WithMany("Vehicles")

@@ -53,7 +53,7 @@
             await this.partRepository.SaveChangesAsync();
         }
 
-        public async void DelatePartAsync(string partName)
+        public async void DeletePartAsync(string partName)
         {
             var exist = this.partRepository.All().Any(x => x.Name == partName);
             if (string.IsNullOrWhiteSpace(partName) || exist)
@@ -67,13 +67,23 @@
             await this.partRepository.SaveChangesAsync();
         }
 
-        public ICollection<PartModel> GetAllParts()
+        public IEnumerable<PartModel> GetAllParts()
         {
-            var partsRepo = this.partRepository.All();
-            return partsRepo as ICollection<PartModel>;
+            var parts = this.partRepository.All()
+                .Select(x => new PartModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price,
+                    Quantity = x.Quantity,
+                })
+                .ToList()
+                .OrderBy(x => x.Name);
+
+            return parts;
         }
 
-        public bool IsItPartCreate(string partName)
+        public bool IsItPartCreated(string partName)
         {
             return this.partRepository.All().Any(x => x.Name == partName);
         }

@@ -5,32 +5,38 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TeslaService.Data;
+    using TeslaService.Services.Data;
     using TeslaService.Web.ViewModels;
     using TeslaService.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
-        private readonly ApplicationDbContext db;
+        private readonly HomeService homeService;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(HomeService homeService)
         {
-            this.db = db;
+            this.homeService = homeService;
         }
 
         public IActionResult Index()
         {
-            var userRegisterCount = this.db.Users.Count();
-            var vehicleRegisterCount = this.db.Vehicles.Count();
-            var countParts = this.db.Parts.Count();
+            var usersCount = this.homeService.CountUsers();
+            var vehiclesCount = this.homeService.CountVehicles();
+            var partsCount = this.homeService.CountParts();
 
             var info = new IndexViewModel()
             {
-                UserRegisterCount = userRegisterCount,
-                VehicleRegisterCount = vehicleRegisterCount,
-                CountParts = countParts,
+                UsersCount = usersCount,
+                VehiclesCount = vehiclesCount,
+                PartsCount = partsCount,
             };
 
             return this.View(info);
+        }
+
+        public IActionResult About()
+        {
+            return this.View();
         }
 
         public IActionResult Privacy()

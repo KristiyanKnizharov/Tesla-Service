@@ -22,8 +22,6 @@
 
         public virtual ICollection<Employee> Employees { get; set; }
 
-        public int VehicleId { get; set; }
-
         public virtual ICollection<Vehicle> Vehicles { get; set; }
     }
 }

@@ -7,6 +7,10 @@ a.navbar-brand {
     word-break: break-all;
 }
 
+.navbar-color {
+    background-color: #ff3547!important
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -17,7 +21,6 @@ html {
         font-size: 16px;
     }
 }
-
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
@@ -27,6 +30,17 @@ html {
 
 .box-shadow {
     box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.buttonCreate {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 button.accept-policy {
@@ -53,4 +67,24 @@ body {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+}
+
+/* Service page */
+
+#hero {
+    width: auto;
+    height: auto;
+    background: url("https://electrek.co/wp-content/uploads/sites/3/2016/02/tesla-service-e1455120603609.jpg?quality=82&strip=all") top right;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* About page */
+
+.section-about-tesla {
+    margin-bottom: 30px;
+}
+* {
+    box-sizing: border-box;
 }

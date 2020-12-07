@@ -5,15 +5,20 @@
 
     public class Insurance
     {
+        public Insurance()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [MaxLength(30)]
         public string VinNumber { get; set; }
 
-        public DateTime DateOfStart { get; set; }
+        public string DateOfStart { get; set; }
 
-        public DateTime DateOfEnd { get; set; }
+        public string DateOfEnd { get; set; }
 
         [MaxLength(200)]
         public string Description { get; set; }

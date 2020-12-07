@@ -1,0 +1,40 @@
+﻿@using TeslaService.Common
+@using TeslaService.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<section id="" class="">
+    <br />
+    <div class="container d-flex flex-column align-items-center aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+        @if (this.User.Identity.IsAuthenticated)
+	    {
+            <h1>My Service</h1>
+	    }
+        else
+	    {
+             <h1>Service</h1>
+	    }
+        <h2>Here you can find out available stock and our employees.</h2>
+
+        <br />
+        
+        @if (this.User.Identity.IsAuthenticated)
+        {
+            <div class="nav-item">
+                <a class="nav-link btn-about" asp-area="" asp-controller="Warehouse" asp-action="All">Warehouse</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link btn-about" asp-area="" asp-controller="Employee" asp-action="All">All Employee</a>
+            </div>
+        }
+        
+        @if (!this.User.Identity.IsAuthenticated)
+        {
+            <form class="form-inline btn-about" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                <button type="submit" class="nav-link btn">Login</button>
+            </form>
+        }
+    </div>
+</section>
+

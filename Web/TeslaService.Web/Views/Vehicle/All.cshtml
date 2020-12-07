@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TeslaService.Data.Models.Vehicle>
+@{
+    ViewData["Title"] = "My Vehicles";
+}
+
+<h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i>@this.ViewData["Title"]</h1>
+
+<br />
+
+<div class="text-center">
+    <div class="">
+        <a asp-area="" asp-controller="Vehicle" asp-action="Create" class="buttonCreate">Create</a>
+    </div>
+</div>
+
+<br />
+
+<div class="row">
+    @foreach (var vehicle in Model)
+    {
+        <div class="col-md-4" style="padding-top: 30px;">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="@vehicle.ImageURL" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@vehicle.VehicleModel</h5>
+                    <p class="card-text">@vehicle.Id <i class="fas fa-dollar-sign"></i></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Category: @vehicle.VehicleType</li>
+                    <li class="list-group-item">Mileage: </li>
+                    <li class="list-group-item">InsuranceId: @vehicle.InsuranceId</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="list-group-item text-center">
+                                <a asp-action="Edit" asp-controller="Car" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-edit" style="color: darkorange"></i>Edit</a>
+                                <a asp-action="Delete" asp-controller="Car" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-trash" style="color: darkorange"></i> Delete</a>
+                            </li>
+                        }
+                    }
+                </ul>
+                <div class="row">
+                    <div class="card-body" style="padding-left: 30px;">
+                        <a asp-action="Details" asp-controller="Car" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-info-circle" style="color: darkorange"></i> More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
