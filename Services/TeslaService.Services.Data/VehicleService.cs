@@ -38,6 +38,7 @@
 
             var newBattery = new Battery()
             {
+                Id = vehicleId,
                 Status = TeslaService.Data.Models.Enum.BatteryStatus.Excellent,
                 SoftwareVersion = dto.SoftwareVersion,
                 Mileage = dto.Mileage,

@@ -2,10 +2,11 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using TeslaService.Data.Common.Models;
-
-    public class Part : BaseModel<int>
+    public class Part
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 

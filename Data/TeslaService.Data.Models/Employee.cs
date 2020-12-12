@@ -19,6 +19,8 @@
         [Required]
         public string ImageURL { get; set; }
 
+        public string DateOfJoin { get; set; }
+
         public int ServiceId { get; set; }
 
         public virtual Service Service { get; set; }

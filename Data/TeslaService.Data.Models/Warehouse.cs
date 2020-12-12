@@ -13,6 +13,9 @@
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        public string Location { get; set; }
+
         public virtual ICollection<Part> Parts { get; set; }
     }
 }

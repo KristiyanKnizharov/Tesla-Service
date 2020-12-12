@@ -16,7 +16,7 @@
 
         public IActionResult All()
         {
-            var allEmployees = this.employeeService.GetAllEmployee();
+            var allEmployees = this.employeeService.GetAllEmployees();
             return this.View(allEmployees);
         }
 

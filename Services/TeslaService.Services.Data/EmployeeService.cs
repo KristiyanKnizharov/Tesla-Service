@@ -1,5 +1,6 @@
 ﻿namespace TeslaService.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,7 +21,7 @@
             this.employeeRepository = employeeRepository;
         }
 
-        public int CountEmployee()
+        public int CountEmployees()
         {
             return this.employeeRepository.AllAsNoTracking().Count();
         }
@@ -35,7 +36,7 @@
             }
         }
 
-        public IEnumerable<EmployeeModel> GetAllEmployee()
+        public IEnumerable<EmployeeModel> GetAllEmployees()
         {
             var allEmployee = this.employeeRepository.AllAsNoTracking()
                 .ToList()
@@ -47,6 +48,7 @@
                     ImageURL = x.ImageURL,
                     Position = x.Position,
                     ServiceId = x.ServiceId,
+                    DateOfJoin = x.DateOfJoin,
                 });
 
             return allEmployee;
@@ -61,6 +63,7 @@
                 Position = employee.Position,
                 ImageURL = employee.ImageURL,
                 ServiceId = ServiceNumber,
+                DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
             };
             await this.employeeRepository.AddAsync(newEmployee);
             await this.employeeRepository.SaveChangesAsync();

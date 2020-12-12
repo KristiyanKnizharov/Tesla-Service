@@ -13,8 +13,8 @@
 
         bool IsTheEmpoyeeExist(string fullName);
 
-        IEnumerable<EmployeeModel> GetAllEmployee();
+        IEnumerable<EmployeeModel> GetAllEmployees();
 
-        int CountEmployee();
+        int CountEmployees();
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeslaService.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitalCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,20 +89,6 @@ namespace TeslaService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Services",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    WarehouseId = table.Column<int>(nullable: false),
-                    VehicleId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Services", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
                 {
@@ -118,6 +104,19 @@ namespace TeslaService.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Settings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Warehouses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Location = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warehouses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +226,25 @@ namespace TeslaService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WarehouseId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Services_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
@@ -258,11 +276,10 @@ namespace TeslaService.Data.Migrations
                     VehicleType = table.Column<int>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
                     DateOfPurchase = table.Column<DateTime>(nullable: false),
-                    BatteryId = table.Column<int>(nullable: false),
-                    BatteryId1 = table.Column<string>(nullable: true),
+                    BatteryId = table.Column<string>(nullable: false),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    InsuranceId = table.Column<int>(nullable: false),
+                    InsuranceId = table.Column<int>(nullable: true),
                     InsuranceId1 = table.Column<string>(nullable: true),
                     ServiceId = table.Column<int>(nullable: false)
                 },
@@ -270,8 +287,8 @@ namespace TeslaService.Data.Migrations
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Vehicles_Batteries_BatteryId1",
-                        column: x => x.BatteryId1,
+                        name: "FK_Vehicles_Batteries_BatteryId",
+                        column: x => x.BatteryId,
                         principalTable: "Batteries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -296,32 +313,11 @@ namespace TeslaService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Warehouses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ServiceId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Warehouses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Warehouses_Services_ServiceId",
-                        column: x => x.ServiceId,
-                        principalTable: "Services",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Parts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
@@ -410,14 +406,19 @@ namespace TeslaService.Data.Migrations
                 column: "WarehouseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Services_WarehouseId",
+                table: "Services",
+                column: "WarehouseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
                 table: "Settings",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_BatteryId1",
+                name: "IX_Vehicles_BatteryId",
                 table: "Vehicles",
-                column: "BatteryId1");
+                column: "BatteryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_InsuranceId1",
@@ -433,12 +434,6 @@ namespace TeslaService.Data.Migrations
                 name: "IX_Vehicles_UserId",
                 table: "Vehicles",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Warehouses_ServiceId",
-                table: "Warehouses",
-                column: "ServiceId",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -474,19 +469,19 @@ namespace TeslaService.Data.Migrations
                 name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "Warehouses");
-
-            migrationBuilder.DropTable(
                 name: "Batteries");
 
             migrationBuilder.DropTable(
                 name: "Insurances");
 
             migrationBuilder.DropTable(
+                name: "Services");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Services");
+                name: "Warehouses");
         }
     }
 }

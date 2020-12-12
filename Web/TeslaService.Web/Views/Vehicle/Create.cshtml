@@ -10,52 +10,54 @@
 
 <br />
 
-<form method="post" class="col-md-6 offset-md-3"
-      enctype="multipart/form-data">
-    <h1>@this.ViewData["Title"]</h1>
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="VehicleType"></label>
-        <select asp-for="VehicleType" asp-items="@Html.GetEnumSelectList<VehicleType>()" class="form-control  col-md-4"></select>
-    </div>
-    <div class="form-group">
-        <label asp-for="VehicleModel"></label>
-        <select asp-for="VehicleModel" asp-items="@Html.GetEnumSelectList<VehicleModel>()" class="form-control  col-md-4"></select>
-        <span asp-validation-for="VehicleModel" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ImageURL"></label>
-        <input asp-for="ImageURL" class="form-control" />
-        <span asp-validation-for="ImageURL" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="InsuranceId"></label>
-        <input asp-for="InsuranceId" class="form-control"/>
-        <span asp-validation-for="InsuranceId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DateOfPurchase"></label>
-        <input asp-for="DateOfPurchase" class="form-control" />
-        <span asp-validation-for="DateOfPurchase" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ServiceId"></label>
-        <input asp-for="ServiceId" class="form-control" />
-        <span asp-validation-for="ServiceId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="BatteryId"></label>
-        <input asp-for="BatteryId" class="form-control" />
-        <span asp-validation-for="BatteryId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    @*<div id="IngredientsContainer">
-            <label asp-for="Ingredients"></label>
-            <a class="btn btn-success" onclick="AddMoreIngredients()">+</a>
-        </div>*@
-    <input type="submit" class="btn btn-primary" />
-</form>
+<body class="vw-100 vh-100 overflow-auto">
+    <form method="post" class="col-md-6 offset-md-3"
+          enctype="multipart/form-data">
+        <h1>@this.ViewData["Title"]</h1>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="VehicleType"></label>
+            <select asp-for="VehicleType" asp-items="@Html.GetEnumSelectList<VehicleType>()" class="form-control  col-md-4"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="VehicleModel"></label>
+            <select asp-for="VehicleModel" asp-items="@Html.GetEnumSelectList<VehicleModel>()" class="form-control  col-md-4"></select>
+            <span asp-validation-for="VehicleModel" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ImageURL"></label>
+            <input asp-for="ImageURL" class="form-control" />
+            <span asp-validation-for="ImageURL" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="InsuranceId"></label>
+            <input asp-for="InsuranceId" class="form-control" />
+            <span asp-validation-for="InsuranceId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateOfPurchase"></label>
+            <input asp-for="DateOfPurchase" class="form-control" />
+            <span asp-validation-for="DateOfPurchase" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ServiceId"></label>
+            <input asp-for="ServiceId" class="form-control" />
+            <span asp-validation-for="ServiceId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BatteryId"></label>
+            <input asp-for="BatteryId" class="form-control" />
+            <span asp-validation-for="BatteryId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        @*<div id="IngredientsContainer">
+                <label asp-for="Ingredients"></label>
+                <a class="btn btn-success" onclick="AddMoreIngredients()">+</a>
+            </div>*@
+        <input type="submit" class="btn btn-primary" />
+    </form>
+</body>

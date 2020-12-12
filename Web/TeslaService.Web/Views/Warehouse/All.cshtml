@@ -4,29 +4,36 @@
     this.ViewData["Title"] = "All parts";
     var partcontroller = this.Model;
 }
-
-<table class="table" style="border: 1px solid">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price(BGN)</th>
-            <th scope="col">Quantity</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (PartModel part in Model)
-        {
+<body class="vw-100 vh-100 overflow-auto">
+    <table class="table" style="border: 1px solid; overflow-x:auto;">
+        <thead class="thead-dark">
             <tr>
-                <th scope="row">@part.Id</th>
-                <td>@part.Name</td>
-                <td>@part.Price</td>
-                <td>@part.Quantity</td>
-                <td><button class="btn-dark" asp-controller="Part" asp-action="Add">Add</button></td>
-                <td><button class="btn-dark">Remove</button></td>
+                <th>#</th>
+                <th>Name</th>
+                <th>Price(BGN)</th>
+                <th>Quantity</th>
+                <th></th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (PartModel part in Model)
+            {
+                <tr>
+                    <th scope="row">@part.Id</th>
+                    <td>@part.Name</td>
+                    <td>@part.Price</td>
+                    <td>@part.Quantity</td>
+                    <td><button class="btn-dark" href="Part/AddQuantity/@part.Name">Add</button></td>
+                    <td><button class="btn-dark">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <div class="">
+            <a asp-area="" asp-controller="Part" asp-action="Create" class="buttonCreate">Create</a>
+        </div>
+    </div>
+</body>

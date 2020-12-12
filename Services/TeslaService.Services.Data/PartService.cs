@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Threading.Tasks;
     using TeslaService.Data.Common.Repositories;
     using TeslaService.Data.Models;
     using TeslaService.Services.Data.Common;
@@ -20,10 +20,11 @@
 
         public async void AddPartAsync(string partName)
         {
-            var part = this.partRepository.All().Where(x => x.Name == partName);
-            part.Select(x => x.Quantity + 1);
-            this.partRepository.Update(part as Part);
-            await this.partRepository.SaveChangesAsync();
+            if (this.partRepository.AllAsNoTracking().Any(x => x.Name == partName))
+            {
+                this.partRepository.All().Where(x => x.Name == partName).Select(x => x.Quantity + 1);
+                await this.partRepository.SaveChangesAsync();
+            }
         }
 
         public int CountParts(string name)
@@ -31,7 +32,7 @@
             return this.partRepository.All().Where(x => x.Name == name).Select(x => x.Quantity).Count();
         }
 
-        public async void CreatePartAsync(string partName, double price)
+        public async Task CreatePartAsync(string partName, double price)
         {
             if (string.IsNullOrWhiteSpace(partName) || partName.Length < 2)
             {

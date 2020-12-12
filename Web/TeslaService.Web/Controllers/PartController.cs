@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TeslaService.Services.Data;
+    using TeslaService.Web.ViewModels.Part;
 
     public class PartController : BaseController
     {
@@ -20,11 +21,18 @@
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(string name, double price)
+        public IActionResult Add(string name)
         {
             this.partService.AddPartAsync(name);
             var parts = this.partService.GetAllParts();
             return this.View(parts);
+        }
+
+        [Authorize]
+        public IActionResult Create()
+        {
+            var viewModel = new CreatePartModel() { };
+            return this.View(viewModel);
         }
 
         [HttpPost]
@@ -36,9 +44,19 @@
                 this.partService.CreatePartAsync(name, price);
             }
 
-            this.partService.AddPartAsync(name);
-            var parts = this.partService.GetAllParts();
-            return this.View(parts);
+            return this.Redirect("/Warehouse/All");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult AddQuantity(string partName)
+        {
+            if (this.partService.IsItPartCreated(partName))
+            {
+                this.partService.AddPartAsync(partName);
+            }
+
+            return this.Redirect("/Warehouse/All");
         }
     }
 }

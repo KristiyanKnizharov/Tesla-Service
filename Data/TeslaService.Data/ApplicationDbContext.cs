@@ -85,11 +85,10 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            //builder.Entity<Service>()
-            //    .HasOne(s => s.Warehouse)
-            //    .WithOne(w => w.Service)
-            //    .HasForeignKey<Warehouse>(i => i.ServiceId);
+            ////builder.Entity<Warehouse>()
+            ////   .HasOne(s => s.Warehouse)
+            ////   .WithOne(w => w.Service)
+            ////   .HasForeignKey<Warehouse>(i => i.ServiceId);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

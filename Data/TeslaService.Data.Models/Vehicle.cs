@@ -30,7 +30,7 @@
         public DateTime DateOfPurchase { get; set; }
 
         [Required]
-        public int BatteryId { get; set; }
+        public string BatteryId { get; set; }
 
         public Battery Battery { get; set; }
 
