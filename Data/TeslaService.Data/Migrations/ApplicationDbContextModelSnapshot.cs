@@ -363,6 +363,9 @@ namespace TeslaService.Data.Migrations
                     b.Property<string>("VehicleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("VehicleModel")
+                        .HasColumnType("int");
+
                     b.Property<int?>("WarehouseId")
                         .HasColumnType("int");
 
@@ -387,7 +390,8 @@ namespace TeslaService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WarehouseId");
+                    b.HasIndex("WarehouseId")
+                        .IsUnique();
 
                     b.ToTable("Services");
                 });
@@ -430,7 +434,6 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BatteryId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateOfPurchase")
@@ -444,10 +447,7 @@ namespace TeslaService.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("InsuranceId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("InsuranceId1")
+                    b.Property<string>("InsuranceId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ServiceId")
@@ -466,7 +466,7 @@ namespace TeslaService.Data.Migrations
 
                     b.HasIndex("BatteryId");
 
-                    b.HasIndex("InsuranceId1");
+                    b.HasIndex("InsuranceId");
 
                     b.HasIndex("ServiceId");
 
@@ -485,6 +485,9 @@ namespace TeslaService.Data.Migrations
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -554,7 +557,7 @@ namespace TeslaService.Data.Migrations
             modelBuilder.Entity("TeslaService.Data.Models.Part", b =>
                 {
                     b.HasOne("TeslaService.Data.Models.Vehicle", null)
-                        .WithMany("RepairedPart")
+                        .WithMany("RepairedParts")
                         .HasForeignKey("VehicleId");
 
                     b.HasOne("TeslaService.Data.Models.Warehouse", null)
@@ -565,8 +568,8 @@ namespace TeslaService.Data.Migrations
             modelBuilder.Entity("TeslaService.Data.Models.Service", b =>
                 {
                     b.HasOne("TeslaService.Data.Models.Warehouse", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
+                        .WithOne("Service")
+                        .HasForeignKey("TeslaService.Data.Models.Service", "WarehouseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -575,13 +578,11 @@ namespace TeslaService.Data.Migrations
                 {
                     b.HasOne("TeslaService.Data.Models.Battery", "Battery")
                         .WithMany()
-                        .HasForeignKey("BatteryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("BatteryId");
 
                     b.HasOne("TeslaService.Data.Models.Insurance", "Insurance")
                         .WithMany()
-                        .HasForeignKey("InsuranceId1");
+                        .HasForeignKey("InsuranceId");
 
                     b.HasOne("TeslaService.Data.Models.Service", "Service")
                         .WithMany("Vehicles")

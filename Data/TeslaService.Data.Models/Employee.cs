@@ -1,6 +1,7 @@
 ﻿namespace TeslaService.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Employee
     {
@@ -21,6 +22,7 @@
 
         public string DateOfJoin { get; set; }
 
+        [ForeignKey(nameof(Service))]
         public int ServiceId { get; set; }
 
         public virtual Service Service { get; set; }

@@ -42,7 +42,6 @@
                 .ToList()
                 .Select(x => new EmployeeModel()
                 {
-                    Id = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     ImageURL = x.ImageURL,
@@ -56,13 +55,17 @@
 
         public async Task HiredEmployeeAsync(EmployeeModel employee)
         {
+            var count = this.employeeRepository.AllAsNoTracking()
+                .OrderByDescending(x => x.Id).FirstOrDefault().Id;
+
             var newEmployee = new Employee()
             {
+                Id = count + 1,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Position = employee.Position,
                 ImageURL = employee.ImageURL,
-                ServiceId = ServiceNumber,
+                ServiceId = employee.ServiceId,
                 DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
             };
             await this.employeeRepository.AddAsync(newEmployee);

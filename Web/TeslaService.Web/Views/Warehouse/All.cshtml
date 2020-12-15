@@ -10,6 +10,7 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Model</th>
                 <th>Price(BGN)</th>
                 <th>Quantity</th>
                 <th></th>
@@ -22,10 +23,11 @@
                 <tr>
                     <th scope="row">@part.Id</th>
                     <td>@part.Name</td>
+                    <td>@part.VehicleModel</td>
                     <td>@part.Price</td>
                     <td>@part.Quantity</td>
-                    <td><button class="btn-dark" href="Part/AddQuantity/@part.Name">Add</button></td>
-                    <td><button class="btn-dark">Remove</button></td>
+                    <td><button class="btn-dark" onclick="/Part/AddQuantity/@part.Name">Add</button></td>
+                    <td><button class="btn-dark" asp-controller="Part" asp-action="RemoveQuantity/@part.Name">Remove</button></td>
                 </tr>
             }
         </tbody>

@@ -1,0 +1,51 @@
+﻿@*@model TeslaService.Web.ViewModels.Battery.InfoBatteryModel*@
+@model TeslaService.Web.ViewModels.Vehicle.DetailsVehicleModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i> @Model.VehicleModel</h1>
+
+
+<div class="container text-center">
+    <h1 class="my-4">
+        @Model.VehicleType
+        <small>@Model.DateOfPurchase</small>
+    </h1>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <img class="img-fluid" src="@Model.ImageURL">
+        </div>
+        <div class="col-md-5 mx-auto">
+            <h3 class="my-3">Description</h3>
+            <p>@Model.Description</p>
+            <hr />
+            <h3 class="my-3">Battery features</h3>
+            <div class="dropdown">
+                <button class="dropbtn">Dropdown</button>
+                <div class="dropdown-content">
+                    <a >@Model.Battery.HorsePower</a>
+                    <a >@Model.Battery.KilowattHour</a>
+                    <a >@Model.Battery.Mileage</a>
+                    <a >@Model.Battery.Range</a>
+                    <a >@Model.Battery.SoftwareVersion</a>
+                    <a >@Model.Battery.Status</a>
+                </div>
+            </div>
+            <hr />
+            <h3 class="my-3">Details</h3>
+            <div>
+                <p>@Model.DateOfPurchase</p>
+                <p>Transimisson: Automatic</p>
+                <p><i class="fas fa-heart" style="color: darkorange"></i> @Model.DateOfPurchase.Date.ToString("d")</p>
+            </div>
+            @*<div>
+                @await Html.PartialAsync("_RatePartial", new VehiclePortal.Common.ViewModels.RateCarBindingModel
+                {
+                    CarId = Model.Id
+                })
+            </div>*@
+        </div>
+    </div>
+</div>

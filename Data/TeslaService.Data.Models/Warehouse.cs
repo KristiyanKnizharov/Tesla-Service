@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Warehouse
     {
@@ -15,6 +16,10 @@
 
         [Required]
         public string Location { get; set; }
+
+        public int ServiceId { get; set; }
+
+        public Service Service { get; set; }
 
         public virtual ICollection<Part> Parts { get; set; }
     }

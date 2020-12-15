@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using TeslaService.Data.Models.Enum;
 
@@ -11,7 +12,7 @@
         public Vehicle()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.RepairedPart = new HashSet<Part>();
+            this.RepairedParts = new HashSet<Part>();
         }
 
         [Key]
@@ -29,7 +30,7 @@
         [Required]
         public DateTime DateOfPurchase { get; set; }
 
-        [Required]
+        [ForeignKey(nameof(Battery))]
         public string BatteryId { get; set; }
 
         public Battery Battery { get; set; }
@@ -37,19 +38,20 @@
         [MaxLength(200)]
         public string Description { get; set; }
 
+        [ForeignKey(nameof(ApplicationUser))]
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
-        public int? InsuranceId { get; set; }
+        public string InsuranceId { get; set; }
 
         public virtual Insurance Insurance { get; set; }
 
-        public virtual ICollection<Part> RepairedPart { get; set; }
-
-        [Required]
+        [ForeignKey(nameof(Service))]
         public int ServiceId { get; set; }
 
         public virtual Service Service { get; set; }
+
+        public virtual ICollection<Part> RepairedParts { get; set; }
     }
 }

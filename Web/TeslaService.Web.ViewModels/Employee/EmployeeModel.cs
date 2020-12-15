@@ -4,6 +4,7 @@
 
     public class EmployeeModel
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -24,7 +25,6 @@
         [Required]
         public string ImageURL { get; set; }
 
-        [Required]
         public string DateOfJoin { get; set; }
 
         public int ServiceId { get; set; }

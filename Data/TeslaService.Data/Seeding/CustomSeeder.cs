@@ -10,7 +10,9 @@
 
     public class CustomSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(
+            ApplicationDbContext dbContext,
+            IServiceProvider serviceProvider)
         {
             if (!dbContext.Parts.Any())
             {
@@ -20,11 +22,79 @@
                     Name = "Bonnet",
                     Price = 400.00,
                     Quantity = 1,
+                    VehicleModel = VehicleModel.Model_3,
                 });
                 await dbContext.SaveChangesAsync();
             }
 
             var part = dbContext.Parts.FirstOrDefault();
+
+            //// Add Warehouse
+            if (!dbContext.Warehouses.Any())
+            {
+                await dbContext.Warehouses.AddAsync(new Warehouse()
+                {
+                    Location = "Sofia",
+                    Parts = new HashSet<Part>() { part },
+                    Service = dbContext.Services.FirstOrDefault(),
+                });
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            var warehouse = dbContext.Warehouses.FirstOrDefault();
+
+            //// Add Service
+            if (!dbContext.Services.Any())
+            {
+                await dbContext.Services.AddAsync(new Service()
+                {
+                    Employees = new HashSet<Employee>(),
+                    Vehicles = new HashSet<Vehicle>(),
+                    WarehouseId = warehouse.Id,
+                    Warehouse = warehouse,
+                });
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            var service = dbContext.Services.FirstOrDefault();
+
+            //// Add Employee
+            if (!dbContext.Employees.Any())
+            {
+                await dbContext.Employees.AddAsync(new Employee()
+                {
+                    FirstName = "Peter",
+                    LastName = "Stanoev",
+                    ImageURL = "https://i2-prod.irishmirror.ie/incoming/article5425955.ece/ALTERNATES/s615b/MOST-BEAUTIFUL-FACES.jpg",
+                    Position = "Account manager",
+                    ServiceId = service.Id,
+                    Service = service,
+                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
+                });
+                await dbContext.Employees.AddAsync(new Employee()
+                {
+                    FirstName = "Mike",
+                    LastName = "Morino",
+                    ImageURL = "https://ath2.unileverservices.com/wp-content/uploads/sites/8/2019/09/hairstyles-for-men-with-round-faces-jagged-spikes-shutterstock.jpg",
+                    Position = "CTO",
+                    ServiceId = service.Id,
+                    Service = service,
+                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
+                });
+                await dbContext.Employees.AddAsync(new Employee()
+                {
+                    FirstName = "Neil",
+                    LastName = "Robertson",
+                    ImageURL = "https://upload.wikimedia.org/wikipedia/en/6/69/NeilRobertson2016.png",
+                    Position = "Mechanic",
+                    ServiceId = service.Id,
+                    Service = service,
+                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
+                });
+                await dbContext.SaveChangesAsync();
+            }
 
             //// Add battery
             if (!dbContext.Batteries.Any())
@@ -43,61 +113,23 @@
 
             var battery = dbContext.Batteries.FirstOrDefault();
 
-            //// Add Warehouse
-            if (!dbContext.Warehouses.Any())
+            //// Add vehicle
+            if (!dbContext.Vehicles.Any())
             {
-                await dbContext.Warehouses.AddAsync(new Warehouse()
+                await dbContext.Vehicles.AddAsync(new Vehicle()
                 {
-                    Location = "Sofia",
-                    Parts = new HashSet<Part>() { part },
+                    VehicleModel = VehicleModel.Model_3,
+                    VehicleType = VehicleType.Sedan,
+                    ImageURL = "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tesla/Tesla-Model-3/5100/1558500541732/front-left-side-47.jpg?tr=h-48",
+                    DateOfPurchase = new DateTime(2018, 3, 15),
+                    Description = "My Tesla Model 3 car",
+                    ServiceId = service.Id,
+                    Battery = battery,
+                    BatteryId = battery.Id,
                 });
-
                 await dbContext.SaveChangesAsync();
             }
-
-            var warehouse = dbContext.Warehouses.FirstOrDefault();
-
-            //// Add Service
-            if (!dbContext.Services.Any())
-            {
-                var service = new Service() { Warehouse = warehouse };
-                await dbContext.Services.AddAsync(service);
-                await dbContext.SaveChangesAsync();
-            }
-
-            //// Add Employee
-            if (!dbContext.Employees.Any())
-            {
-                await dbContext.Employees.AddAsync(new Employee()
-                {
-                    FirstName = "Peter",
-                    LastName = "Stanoev",
-                    ImageURL = "https://i2-prod.irishmirror.ie/incoming/article5425955.ece/ALTERNATES/s615b/MOST-BEAUTIFUL-FACES.jpg",
-                    Position = "Account manager",
-                    ServiceId = dbContext.Services.FirstOrDefault().Id,
-                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
-                });
-                await dbContext.Employees.AddAsync(new Employee()
-                {
-                    FirstName = "Mike",
-                    LastName = "Morino",
-                    ImageURL = "https://ath2.unileverservices.com/wp-content/uploads/sites/8/2019/09/hairstyles-for-men-with-round-faces-jagged-spikes-shutterstock.jpg",
-                    Position = "CTO",
-                    ServiceId = dbContext.Services.FirstOrDefault().Id,
-                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
-                });
-                await dbContext.Employees.AddAsync(new Employee()
-                {
-                    FirstName = "Neil",
-                    LastName = "Robertson",
-                    ImageURL = "https://upload.wikimedia.org/wikipedia/en/6/69/NeilRobertson2016.png",
-                    Position = "Mechanic",
-                    ServiceId = dbContext.Services.FirstOrDefault().Id,
-                    DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
-                });
-
-                await dbContext.SaveChangesAsync();
-            }
+            var vehicle = dbContext.Vehicles.FirstOrDefault();
 
             //// Add insurance
             if (!dbContext.Insurances.Any())
@@ -113,20 +145,6 @@
             }
 
             var insurance = dbContext.Insurances.FirstOrDefault();
-
-            //// Add vehicle
-            ////await dbContext.Vehicles.AddAsync(new Vehicle()
-            ////{
-            ////    VehicleModel = VehicleModel.Model_3,
-            ////    VehicleType = VehicleType.Sedan,
-            ////    ImageURL = "https://stimg.cardekho.com/images/carexteriorimages/930x620/Tesla/Tesla-Model-3/5100/1558500541732/front-left-side-47.jpg?tr=h-48",
-            ////    DateOfPurchase = new DateTime(2018, 3, 15),
-            ////    BatteryId = battery.Id,
-            ////    Description = "Used car",
-            ////    UserId = this.userManager.GetUserAsync(this.User),
-            ////    ServiceId = service.Id,
-            ////    InsuranceId = insurance.Id
-            ////});
         }
     }
 }

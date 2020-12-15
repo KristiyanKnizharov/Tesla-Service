@@ -31,17 +31,24 @@
         [Authorize]
         public IActionResult Create()
         {
-            var viewModel = new CreatePartModel() { };
+            var viewModel = new CreatePartModel();
             return this.View(viewModel);
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Create(string name, double price)
+        public async Task<IActionResult> Create(CreatePartModel cpm)
         {
-            if (!this.partService.IsItPartCreated(name))
+            try
             {
-                this.partService.CreatePartAsync(name, price);
+                if (!this.partService.IsItPartWithModelCreated(cpm.Name, cpm.VehicleModel))
+                {
+                    await this.partService.CreatePartAsync(cpm);
+                }
+            }
+            catch (Exception message)
+            {
+                return this.Problem(message.ToString());
             }
 
             return this.Redirect("/Warehouse/All");
@@ -54,6 +61,18 @@
             if (this.partService.IsItPartCreated(partName))
             {
                 this.partService.AddPartAsync(partName);
+            }
+
+            return this.Redirect("/Warehouse/All");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult RemoveQuantity(string partName)
+        {
+            if (this.partService.IsItPartCreated(partName))
+            {
+                this.partService.RemovePartAsync(partName);
             }
 
             return this.Redirect("/Warehouse/All");

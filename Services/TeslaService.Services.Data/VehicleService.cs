@@ -3,12 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+    using System.Threading.Tasks;
 
     using TeslaService.Data.Common.Repositories;
     using TeslaService.Data.Models;
     using TeslaService.Services.Data.Common;
     using TeslaService.Services.Data.Dto;
+    using TeslaService.Web.ViewModels.Battery;
     using TeslaService.Web.ViewModels.Parts;
     using TeslaService.Web.ViewModels.Vehicle;
 
@@ -16,19 +17,25 @@
     {
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IRepository<Vehicle> vehicleRepository;
+        private readonly IRepository<Service> serviceRepository;
         private readonly IRepository<Insurance> insuranceRepository;
         private readonly IRepository<Part> partRepository;
+        private readonly IRepository<Battery> batteryRepository;
 
         public VehicleService(
-            IRepository<Vehicle> vehicle,
-            IDeletableEntityRepository<ApplicationUser> user,
+            IRepository<Vehicle> vehicleRepository,
+            IDeletableEntityRepository<ApplicationUser> userRepository,
             IRepository<Insurance> insuranceRepository,
-            IRepository<Part> partRepository)
+            IRepository<Service> serviceRepository,
+            IRepository<Part> partRepository,
+            IRepository<Battery> batteryRepository)
         {
-            this.userRepository = user;
-            this.vehicleRepository = vehicle;
+            this.userRepository = userRepository;
+            this.vehicleRepository = vehicleRepository;
+            this.serviceRepository = serviceRepository;
             this.insuranceRepository = insuranceRepository;
             this.partRepository = partRepository;
+            this.batteryRepository = batteryRepository;
         }
 
         public void AddNewBattery(string vehicleId, BatteryDto dto)
@@ -71,6 +78,10 @@
         {
             if (this.userRepository.All().Any(x => x.Id == userId))
             {
+                var currBattery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId);
+                var currInsurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId);
+                var currService = this.serviceRepository.All().FirstOrDefault(x => x.Id == vehicle.ServiceId);
+
                 var currVehicle = new Vehicle()
                 {
                     VehicleModel = vehicle.VehicleModel,
@@ -78,14 +89,47 @@
                     ImageURL = vehicle.ImageURL,
                     DateOfPurchase = vehicle.DateOfPurchase,
                     BatteryId = vehicle.BatteryId,
+                    Battery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId),
                     UserId = userId,
+                    User = this.userRepository.All().FirstOrDefault(x => x.Id == userId),
                     Description = vehicle.Description,
                     InsuranceId = vehicle.InsuranceId,
+                    Insurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId),
                     ServiceId = vehicle.ServiceId,
+                    Service = this.serviceRepository.All().FirstOrDefault(x => x.Id == vehicle.ServiceId),
                 };
                 this.vehicleRepository.AddAsync(currVehicle);
                 this.vehicleRepository.SaveChangesAsync();
             }
+        }
+
+        public VehicleDto Details(string id, Task<ApplicationUser> user)
+        {
+            var vehicle = this.vehicleRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (vehicle == null)
+            {
+                throw new ArgumentException("There is no info for this vehicle.");
+            }
+
+            var claims = this.userRepository.All().FirstOrDefault(x => x.Claims == user);
+
+            var vehicleDto = new VehicleDto()
+            {
+                VehicleModel = vehicle.VehicleModel,
+                VehicleType = vehicle.VehicleType,
+                ImageURL = vehicle.ImageURL,
+                DateOfPurchase = vehicle.DateOfPurchase,
+                BatteryId = vehicle.BatteryId,
+                Battery = vehicle.Battery,
+                Description = vehicle.Description,
+                UserId = vehicle.UserId,
+
+                // TODO
+                User = null,
+                InsuranceId = vehicle.InsuranceId,
+                Insurance = vehicle.Insurance,
+            };
+            return vehicleDto;
         }
 
         public void DeleteVehicle(string userId, string vehicleId)
@@ -101,7 +145,7 @@
             var currVehicle = this.vehicleRepository.All()
                 .Where(x => x.Id == vehicleId);
 
-            var allParts = currVehicle.Select(x => x.RepairedPart).ToList();
+            var allParts = currVehicle.Select(x => x.RepairedParts).ToList();
 
             return allParts as IEnumerable<PartModel>;
         }
@@ -124,21 +168,39 @@
                 .Any(x => x.Id == insuranceId);
         }
 
-        public IEnumerable<Vehicle> GetAllVehicles(string userId)
+        public IEnumerable<DetailsVehicleModel> GetAllVehicles(string userId)
         {
-            var allVehicles = this.userRepository.All()
-                .Where(u => u.Id == userId)
-                .SelectMany(x => x.Vehicles.Select(c => new Vehicle()
+            var user = this.userRepository.AllAsNoTracking()
+                .FirstOrDefault(u => u.Id == userId);
+            var vehicles = this.vehicleRepository.All().FirstOrDefault();
+            var battery = this.batteryRepository.All().FirstOrDefault();
+
+            // var userVehicles = this.userRepository.All()
+            //    .Where(u => u.Id == userId);
+
+            // TODO: Battery work only with default one!
+            var batteryInfo = this.batteryRepository.All().Where(i => i.Id == battery.Id).Select(b => new InfoBatteryModel()
+            {
+                HorsePower = b.HorsePower,
+                KilowattHour = b.KilowattHour,
+                Mileage = b.Mileage,
+                Range = b.Range,
+                SoftwareVersion = b.SoftwareVersion,
+                Status = b.Status,
+            });
+            var allVehicles = this.vehicleRepository.All().Where(x => x.UserId == user.Id).Select(c => new DetailsVehicleModel()
                 {
+                    Id = c.Id,
                     VehicleModel = c.VehicleModel,
                     VehicleType = c.VehicleType,
                     ImageURL = c.ImageURL,
                     DateOfPurchase = c.DateOfPurchase,
                     BatteryId = c.BatteryId,
+                    Battery = batteryInfo as InfoBatteryModel,
                     Description = c.Description,
                     InsuranceId = c.InsuranceId,
                     ServiceId = c.ServiceId,
-                })) as IEnumerable<Vehicle>;
+                }).ToList();
 
             return allVehicles;
         }

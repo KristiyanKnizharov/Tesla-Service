@@ -1,6 +1,7 @@
 ﻿namespace TeslaService.Services.Data.Common
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using TeslaService.Data.Models;
     using TeslaService.Services.Data.Dto;
@@ -17,11 +18,13 @@
 
         Insurance CreateInsurance(string vehicleId);
 
+        VehicleDto Details(string id, Task<ApplicationUser> user);
+
         bool IsItVehicleCreated(string vehicleId);
 
         bool IsItInsuranceCreated(string insuranceId);
 
-        IEnumerable<Vehicle> GetAllVehicles(string userId);
+        IEnumerable<DetailsVehicleModel> GetAllVehicles(string userId);
 
         IEnumerable<PartModel> GetAllRepairedParts(string vehicleId);
     }

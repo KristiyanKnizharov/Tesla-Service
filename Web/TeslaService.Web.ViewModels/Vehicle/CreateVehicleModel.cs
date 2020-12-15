@@ -11,7 +11,7 @@
         [Required]
         public string BatteryId { get; set; }
 
-        public int? InsuranceId { get; set; }
+        public string InsuranceId { get; set; }
 
         [Required]
         public int ServiceId { get; set; }

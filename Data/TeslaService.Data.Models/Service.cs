@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Service
     {
@@ -14,6 +15,7 @@
         [Key]
         public int Id { get; set; }
 
+        [ForeignKey(nameof(Warehouse))]
         public int WarehouseId { get; set; }
 
         public virtual Warehouse Warehouse { get; set; }

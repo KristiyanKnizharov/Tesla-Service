@@ -81,6 +81,15 @@
             return this.Redirect("All");
         }
 
+        [Authorize]
+        public IActionResult Details(string id)
+        {
+            var user = this.userManager.GetUserAsync(this.User);
+
+            var vehicleDto = this.vehicleService.Details(id, user);
+            return this.View(vehicleDto);
+        }
+
         public IActionResult All()
         {
             var userId = this.userManager.GetUserId(this.User);

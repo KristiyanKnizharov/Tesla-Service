@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TeslaService.Data.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,26 +66,12 @@ namespace TeslaService.Data.Migrations
                     Mileage = table.Column<double>(maxLength: 10, nullable: false),
                     HorsePower = table.Column<int>(maxLength: 5, nullable: false),
                     KilowattHour = table.Column<int>(maxLength: 5, nullable: false),
-                    Range = table.Column<int>(maxLength: 5, nullable: false)
+                    Range = table.Column<int>(maxLength: 5, nullable: false),
+                    VehicleId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Batteries", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Insurances",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    VinNumber = table.Column<string>(maxLength: 30, nullable: true),
-                    DateOfStart = table.Column<string>(nullable: true),
-                    DateOfEnd = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(maxLength: 200, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Insurances", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -112,7 +98,8 @@ namespace TeslaService.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Location = table.Column<string>(nullable: false)
+                    Location = table.Column<string>(nullable: false),
+                    ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,6 +241,7 @@ namespace TeslaService.Data.Migrations
                     LastName = table.Column<string>(nullable: false),
                     Position = table.Column<string>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
+                    DateOfJoin = table.Column<string>(nullable: true),
                     ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -276,11 +264,10 @@ namespace TeslaService.Data.Migrations
                     VehicleType = table.Column<int>(nullable: false),
                     ImageURL = table.Column<string>(nullable: false),
                     DateOfPurchase = table.Column<DateTime>(nullable: false),
-                    BatteryId = table.Column<string>(nullable: false),
+                    BatteryId = table.Column<string>(nullable: true),
                     Description = table.Column<string>(maxLength: 200, nullable: true),
                     UserId = table.Column<string>(nullable: true),
-                    InsuranceId = table.Column<int>(nullable: true),
-                    InsuranceId1 = table.Column<string>(nullable: true),
+                    InsuranceId = table.Column<string>(nullable: true),
                     ServiceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -290,12 +277,6 @@ namespace TeslaService.Data.Migrations
                         name: "FK_Vehicles_Batteries_BatteryId",
                         column: x => x.BatteryId,
                         principalTable: "Batteries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Vehicles_Insurances_InsuranceId1",
-                        column: x => x.InsuranceId1,
-                        principalTable: "Insurances",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -313,12 +294,35 @@ namespace TeslaService.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Insurances",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    VinNumber = table.Column<string>(maxLength: 30, nullable: true),
+                    DateOfStart = table.Column<string>(nullable: true),
+                    DateOfEnd = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    VehicleId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Insurances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Insurances_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Parts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
+                    VehicleModel = table.Column<int>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     VehicleId = table.Column<string>(nullable: true),
@@ -396,6 +400,13 @@ namespace TeslaService.Data.Migrations
                 column: "ServiceId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Insurances_VehicleId",
+                table: "Insurances",
+                column: "VehicleId",
+                unique: true,
+                filter: "[VehicleId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Parts_VehicleId",
                 table: "Parts",
                 column: "VehicleId");
@@ -408,7 +419,8 @@ namespace TeslaService.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Services_WarehouseId",
                 table: "Services",
-                column: "WarehouseId");
+                column: "WarehouseId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Settings_IsDeleted",
@@ -418,12 +430,9 @@ namespace TeslaService.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_BatteryId",
                 table: "Vehicles",
-                column: "BatteryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vehicles_InsuranceId1",
-                table: "Vehicles",
-                column: "InsuranceId1");
+                column: "BatteryId",
+                unique: true,
+                filter: "[BatteryId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_ServiceId",
@@ -457,6 +466,9 @@ namespace TeslaService.Data.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "Insurances");
+
+            migrationBuilder.DropTable(
                 name: "Parts");
 
             migrationBuilder.DropTable(
@@ -470,9 +482,6 @@ namespace TeslaService.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Batteries");
-
-            migrationBuilder.DropTable(
-                name: "Insurances");
 
             migrationBuilder.DropTable(
                 name: "Services");
