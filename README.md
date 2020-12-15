@@ -6,7 +6,7 @@ Tesla Service is ASP.NET Core web application where users can create personal ac
 Nikolay Kostov - https://github.com/NikolayIT/ASP.NET-Core-Template
 
 # Used technologies
-C#
+- C#
 - .NET Core 3.1
 - ASP.NET Core MVC
 - Entity Framework Core
