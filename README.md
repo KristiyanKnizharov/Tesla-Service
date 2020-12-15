@@ -7,9 +7,9 @@ Nikolay Kostov - https://github.com/NikolayIT/ASP.NET-Core-Template
 
 # Used technologies
 C#
-.NET Core 3.1
-ASP.NET Core MVC
-Entity Framework Core
-Bootstrap 4.5
-HTML5
-CSS3
+- .NET Core 3.1
+- ASP.NET Core MVC
+- Entity Framework Core
+- Bootstrap 4.5
+- HTML5
+- CSS3
