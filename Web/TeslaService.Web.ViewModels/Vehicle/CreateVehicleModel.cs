@@ -11,6 +11,7 @@
         [Required]
         public string BatteryId { get; set; }
 
+        [Required]
         public string InsuranceId { get; set; }
 
         [Required]

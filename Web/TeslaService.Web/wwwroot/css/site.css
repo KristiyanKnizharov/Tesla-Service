@@ -82,6 +82,16 @@ body {
     background-repeat: no-repeat;
 }
 
+#hero-blur {
+    width: auto;
+    height: auto;
+    background-image: url("https://electrek.co/wp-content/uploads/sites/3/2016/02/tesla-service-e1455120603609.jpg?quality=82&strip=all") top right;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    filter: blur(6px);
+}
+
 /* About page */
 
 .section-about-tesla {
@@ -90,3 +100,18 @@ body {
 * {
     box-sizing: border-box;
 }
+
+/* Zoom image */
+
+.zoom {
+    padding: 50px;
+    background-color: green;
+    transition: transform .2s; /* Animation */
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+}
+
+    .zoom:hover {
+        transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }

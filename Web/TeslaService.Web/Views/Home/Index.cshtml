@@ -3,23 +3,26 @@
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<body class="vw-100 vh-100 overflow-auto" id="hero">
+    <div class="text-center">
 
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+        <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
 
-    <p class="text-center">We have</p>
-    <table class="table table-dark">
-        <tbody>
-            <tr>
-                <th>Register users: @Model.UsersCount</th>
-                <th>Register vehicle: @Model.VehiclesCount</th>
-                <th>Register parts: @Model.PartsCount</th>
-            </tr>
-        </tbody>
-    </table>
-    <br />
-    <div class="nav-item text-center border-info">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+        <p class="text-center">We have</p>
+        <table class="table table-dark">
+            <tbody>
+                <tr>
+                    <th>Register users: @Model.UsersCount</th>
+                    <th>Register vehicle: @Model.VehiclesCount</th>
+                    <th>Register parts: @Model.PartsCount</th>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <div class="nav-item text-center border-info">
+            <a class="nav-link text-white btn btn-dark btn-sm" asp-area="" asp-controller="Home" asp-action="About">About Tesla Motors, Inc.</a>
+        </div>
+        </ul>
     </div>
-    </ul>
-</div>
+
+</body>

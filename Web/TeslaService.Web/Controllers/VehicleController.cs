@@ -74,7 +74,7 @@
             }
             catch //// If exception thrown then couldn't get response from address
             {
-                return this.NotFound("Image not found!");
+                return this.NotFound();
             }
 
             this.vehicleService.CreateVehicle(user.Id, input);
@@ -84,9 +84,8 @@
         [Authorize]
         public IActionResult Details(string id)
         {
-            var user = this.userManager.GetUserAsync(this.User);
+            var vehicleDto = this.vehicleService.Details(id);
 
-            var vehicleDto = this.vehicleService.Details(id, user);
             return this.View(vehicleDto);
         }
 

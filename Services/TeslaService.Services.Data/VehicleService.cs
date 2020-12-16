@@ -103,15 +103,16 @@
             }
         }
 
-        public VehicleDto Details(string id, Task<ApplicationUser> user)
+        public VehicleDto Details(string id)
         {
-            var vehicle = this.vehicleRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == id);
+            var vehicle = this.vehicleRepository.All().FirstOrDefault(x => x.Id == id);
+
             if (vehicle == null)
             {
                 throw new ArgumentException("There is no info for this vehicle.");
             }
 
-            var claims = this.userRepository.All().FirstOrDefault(x => x.Claims == user);
+            var battery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId);
 
             var vehicleDto = new VehicleDto()
             {
@@ -120,14 +121,11 @@
                 ImageURL = vehicle.ImageURL,
                 DateOfPurchase = vehicle.DateOfPurchase,
                 BatteryId = vehicle.BatteryId,
-                Battery = vehicle.Battery,
+                Battery = battery,
                 Description = vehicle.Description,
                 UserId = vehicle.UserId,
-
-                // TODO
-                User = null,
+                ServiceId = vehicle.ServiceId,
                 InsuranceId = vehicle.InsuranceId,
-                Insurance = vehicle.Insurance,
             };
             return vehicleDto;
         }

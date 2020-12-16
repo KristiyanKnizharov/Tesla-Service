@@ -18,7 +18,7 @@
 
         Insurance CreateInsurance(string vehicleId);
 
-        VehicleDto Details(string id, Task<ApplicationUser> user);
+        VehicleDto Details(string id);
 
         bool IsItVehicleCreated(string vehicleId);
 
