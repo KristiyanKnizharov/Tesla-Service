@@ -18,7 +18,7 @@
         public BatteryStatus Status { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(36)]
         public string SoftwareVersion { get; set; }
 
         [Required]

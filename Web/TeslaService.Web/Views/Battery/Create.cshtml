@@ -7,11 +7,11 @@
     <div style=" padding-left: 20%; padding-right: 20%; padding-top: 10%;">
         <div style="background-color: white;">
             <form method="post" class="col-md-9 offset-md-1">
-                <h1>@this.ViewData["Title"]</h1>
+                <h2>@this.ViewData["Title"]</h2>
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="SoftwareVersion"></label>
-                    <input asp-for="SoftwareVersion" class="form-control" />
+                    <input asp-for="SoftwareVersion" class="form-control"  rows="2" maxlength="36"/>
                     <span asp-validation-for="SoftwareVersion" class="text-danger"></span>
                 </div>
                 <div class="form-group">

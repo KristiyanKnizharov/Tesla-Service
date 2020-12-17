@@ -24,19 +24,38 @@
             return this.insuranceRepository.AllAsNoTracking().Count();
         }
 
-        public Task CreateInsuranceAsync(InfoInsuranceModel insuranceModel)
+        public async Task CreateInsuranceAsync(InfoInsuranceModel insuranceModel)
         {
-            throw new NotImplementedException();
+            var insurance = new Insurance()
+            {
+                Id = insuranceModel.Id,
+                VinNumber = insuranceModel.VinNumber,
+                DateOfStart = insuranceModel.DateOfStart.ToString("d"),
+                DateOfEnd = insuranceModel.DateOfEnd.ToString("d"),
+                Description = insuranceModel.Description,
+            };
+            await this.insuranceRepository.AddAsync(insurance);
+            await this.insuranceRepository.SaveChangesAsync();
         }
 
         public void DeleteInsurance(string insuranceId)
         {
-            throw new NotImplementedException();
+            var insurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == insuranceId);
+            this.insuranceRepository.Delete(insurance);
         }
 
-        public IEnumerable<Insurance> GetAllInsurances()
+        public IEnumerable<AllInsuranceModel> GetAllInsurances()
         {
-            throw new NotImplementedException();
+            var insurances = this.insuranceRepository.All().Select(x => new AllInsuranceModel()
+            {
+                Id = x.Id,
+                VinNumber = x.VinNumber,
+                DateOfStart = DateTime.UtcNow.ToString("d"),
+                DateOfEnd = DateTime.UtcNow.ToString("d"),
+                Description = x.Description,
+            });
+
+            return insurances;
         }
 
         public bool IsItInsuranceCreated(string insuranceId)

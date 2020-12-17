@@ -14,7 +14,7 @@
 
         bool IsItInsuranceCreated(string insuranceId);
 
-        IEnumerable<Insurance> GetAllInsurances();
+        IEnumerable<AllInsuranceModel> GetAllInsurances();
 
         int CountInsurances();
     }
