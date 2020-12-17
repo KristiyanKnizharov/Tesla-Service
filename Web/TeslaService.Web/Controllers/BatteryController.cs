@@ -45,5 +45,12 @@
                 }).ToList();
             return this.View(allBatteries);
         }
+
+        [Authorize]
+        public IActionResult CountBatteries()
+        {
+            var count = this.batteryService.CountBatteries();
+            return this.View(count);
+        }
     }
 }

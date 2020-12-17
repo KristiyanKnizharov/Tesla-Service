@@ -19,7 +19,7 @@
             this.batteryRepository = batteryRepository;
         }
 
-        public int CountBatteries(string name)
+        public int CountBatteries()
         {
             return this.batteryRepository.AllAsNoTracking().Count();
         }

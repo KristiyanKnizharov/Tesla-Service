@@ -17,6 +17,6 @@
 
         IEnumerable<Battery> GetAllBatteries();
 
-        int CountBatteries(string name);
+        int CountBatteries();
     }
 }
