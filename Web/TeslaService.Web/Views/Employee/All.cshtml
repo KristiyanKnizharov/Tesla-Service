@@ -1,12 +1,16 @@
 ﻿@using TeslaService.Web.ViewModels.Employee 
 @model IEnumerable<EmployeeModel>
 
-<body class="vw-100 vh-100 overflow-auto">
-    <div class="text-center border-light">
-        <div class="">
-            <a asp-controller="Employee" asp-action="Hire" class="text-uppercase">Hire</a>
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <br />
+        <div class="text-center">
+            <div class="">
+                <a asp-area="" asp-controller="Employee" asp-action="Hire" class="buttonCreate">Hire employee</a>
+            </div>
         </div>
-    </div>
+    }
     <hr style=" border: 3px medium" />
     <br />
     <div class="container">
@@ -32,11 +36,11 @@
                         <!-- List Group Component -->
                         <ul class="list-group pmd-list">
                             @*<li class="list-group-item d-flex flex-row">
-                                <div class="media-body">
-                                    <label class="pmd-list-subtitle text-center">Employee ID</label>
-                                    <p class="pmd-list-title">Emp-@emp.Id</p>
-                                </div>
-                            </li>*@
+                                    <div class="media-body">
+                                        <label class="pmd-list-subtitle text-center">Employee ID</label>
+                                        <p class="pmd-list-title">Emp-@emp.Id</p>
+                                    </div>
+                                </li>*@
                             <li class="list-group-item d-flex flex-row">
                                 <div class="media-body">
                                     <label class="pmd-list-subtitle">Email Address</label>

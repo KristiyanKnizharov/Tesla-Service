@@ -1,0 +1,42 @@
+﻿@using TeslaService.Web.Controllers
+@using TeslaService.Web.ViewModels.Battery
+@{
+    this.ViewData["Title"] = "All batteries";
+}
+
+
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    <table class="table" style="border: 1px solid; overflow-x:auto; background-color:white">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>status</th>
+                <th>Software Version</th>
+                <th>Mileage</th>
+                <th>Hp</th>
+                <th>kW-h</th>
+                <th>Range</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (InfoBatteryModel battery in Model)
+            {
+                <tr>
+                    <td>@battery.Id</td>
+                    <td>@battery.Status</td>
+                    <td>@battery.SoftwareVersion</td>
+                    <td>@battery.Mileage</td>
+                    <td>@battery.HorsePower</td>
+                    <td>@battery.KilowattHour</td>
+                    <td>@battery.Range</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <div class="">
+            <a asp-area="" asp-controller="Battery" asp-action="Create" class="buttonCreate">Create</a>
+        </div>
+    </div>
+</body>

@@ -6,6 +6,7 @@
 
     public class InfoBatteryModel
     {
+        public string Id { get; set; }
         public BatteryStatus Status { get; set; }
 
         [Required]

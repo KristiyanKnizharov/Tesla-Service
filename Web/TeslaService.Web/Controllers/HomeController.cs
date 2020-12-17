@@ -23,12 +23,16 @@
             var usersCount = this.homeService.CountUsers();
             var vehiclesCount = this.homeService.CountVehicles();
             var partsCount = this.homeService.CountParts();
+            var countpartsTypes = this.homeService.CountTypesOfParts();
+            var employeesCount = this.homeService.CountEmployees();
 
             var info = new IndexViewModel()
             {
                 UsersCount = usersCount,
                 VehiclesCount = vehiclesCount,
                 PartsCount = partsCount,
+                CountTypesOfParts = countpartsTypes,
+                EmployeesCount = employeesCount,
             };
 
             return this.View(info);

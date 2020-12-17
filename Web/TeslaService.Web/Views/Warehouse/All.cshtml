@@ -4,8 +4,8 @@
     this.ViewData["Title"] = "All parts";
     var partcontroller = this.Model;
 }
-<body class="vw-100 vh-100 overflow-auto">
-    <table class="table" style="border: 1px solid; overflow-x:auto;">
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    <table class="table" style="border: 1px solid; overflow-x:auto; background-color:white">
         <thead class="thead-dark">
             <tr>
                 <th>#</th>
@@ -26,8 +26,12 @@
                     <td>@part.VehicleModel</td>
                     <td>@part.Price</td>
                     <td>@part.Quantity</td>
-                    <td><button class="btn-dark" onclick="/Part/AddQuantity/@part.Name">Add</button></td>
-                    <td><button class="btn-dark" asp-controller="Part" asp-action="RemoveQuantity/@part.Name">Remove</button></td>
+                    @* TODO: @if (User.IsInRole("Admin")){ }*@
+                    <td asp-action="Add" asp-controller="Part" asp-route-id="@part.Name" class="btn-dark">Add</td>
+                    <td asp-action="Remove" asp-controller="Part" asp-route-id="@part.Name" class="btn-dark">Remove</td>
+                    
+                    @*<td><button class="btn-dark" onclick="/Part/AddQuantity/@part.Name">Add</button></td>
+                    <td><button class="btn-dark" asp-controller="Part" asp-action="RemoveQuantity/@part.Name">Remove</button></td>*@
                 </tr>
             }
         </tbody>

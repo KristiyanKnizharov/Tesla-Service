@@ -10,7 +10,7 @@
 
 <br />
 
-<body class="vw-100 vh-100 overflow-auto">
+<body class="vw-100 vh-100 overflow-auto"id="hero">
     <form method="post" class="col-md-6 offset-md-3"
           enctype="multipart/form-data">
         <h1>@this.ViewData["Title"]</h1>
@@ -52,13 +52,9 @@
         </div>
         <div class="form-group">
             <label asp-for="Description"></label>
-            <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+            <textarea asp-for="Description" class="form-control" rows="5" maxlength="200"></textarea>
             <span asp-validation-for="Description" class="text-danger"></span>
         </div>
-        @*<div id="IngredientsContainer">
-                <label asp-for="Ingredients"></label>
-                <a class="btn btn-success" onclick="AddMoreIngredients()">+</a>
-            </div>*@
         <input type="submit" class="btn btn-primary" />
     </form>
 </body>

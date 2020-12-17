@@ -5,7 +5,7 @@
     using TeslaService.Services.Data.Contracts;
     using TeslaService.Web.ViewModels.Employee;
 
-    public class EmployeeController : Controller
+    public class EmployeeController : BaseController
     {
         private readonly IEmployeeService employeeService;
 

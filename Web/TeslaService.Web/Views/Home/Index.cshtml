@@ -8,13 +8,15 @@
 
         <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
 
-        <p class="text-center">We have</p>
+        <br /><br /><br />
         <table class="table table-dark">
             <tbody>
                 <tr>
                     <th>Register users: @Model.UsersCount</th>
-                    <th>Register vehicle: @Model.VehiclesCount</th>
+                    <th>Register vehicles: @Model.VehiclesCount</th>
                     <th>Register parts: @Model.PartsCount</th>
+                    @*<th>Register parts: @Model.CountTypesOfParts</th>*@
+                    <th>Register employees: @Model.EmployeesCount</th>
                 </tr>
             </tbody>
         </table>
@@ -22,7 +24,7 @@
         <div class="nav-item text-center border-info">
             <a class="nav-link text-white btn btn-dark btn-sm" asp-area="" asp-controller="Home" asp-action="About">About Tesla Motors, Inc.</a>
         </div>
-        </ul>
+        <hr />
     </div>
 
 </body>

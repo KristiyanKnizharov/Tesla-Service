@@ -92,6 +92,17 @@ body {
     filter: blur(6px);
 }
 
+/* Employees page */
+
+#emp {
+    width: auto;
+    height: auto;
+    background: url("https://miro.medium.com/max/9764/1*rBvGWo4ZXnbgzznL9k9aXw.jpeg") center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
 /* About page */
 
 .section-about-tesla {

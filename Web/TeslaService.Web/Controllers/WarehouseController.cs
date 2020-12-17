@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TeslaService.Services.Data;
 
-    public class WarehouseController : Controller
+    public class WarehouseController : BaseController
     {
         private readonly WarehouseService warehouseService;
         private readonly PartService partService;

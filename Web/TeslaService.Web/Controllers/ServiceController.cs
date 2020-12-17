@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using TeslaService.Services.Data.Contracts;
 
-    public class ServiceController : Controller
+    public class ServiceController : BaseController
     {
         private readonly IServiceService serviceService;
 

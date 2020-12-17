@@ -7,15 +7,12 @@
 
 <body class="vw-100 vh-100 overflow-auto" id="hero">
     <h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i>@this.ViewData["Title"]</h1>
-
     <br />
-
     <div class="text-center">
         <div class="">
             <a asp-area="" asp-controller="Vehicle" asp-action="Create" class="buttonCreate">Create</a>
         </div>
     </div>
-
     <br />
     <div class="row">
         @foreach (var vehicle in Model)
@@ -34,8 +31,8 @@
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="list-group-item text-center">
-                                    <a asp-action="Edit" asp-controller="Car" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-edit" style="color: darkorange"></i>Edit</a>
-                                    <a asp-action="Delete" asp-controller="Car" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-trash" style="color: darkorange"></i> Delete</a>
+                                    <a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-edit" style="color: darkorange"></i>Edit</a>
+                                    <a asp-action="Delete" asp-controller="Vehilce" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-trash" style="color: darkorange"></i> Delete</a>
                                 </li>
                             }
                         }*@

@@ -15,10 +15,12 @@
         private const int ServiceNumber = 1;
 
         private readonly IRepository<Employee> employeeRepository;
+        private readonly IRepository<Service> serviceRepository;
 
-        public EmployeeService(IRepository<Employee> employeeRepository)
+        public EmployeeService(IRepository<Employee> employeeRepository, IRepository<Service> serviceRepository)
         {
             this.employeeRepository = employeeRepository;
+            this.serviceRepository = serviceRepository;
         }
 
         public int CountEmployees()
@@ -55,8 +57,7 @@
 
         public async Task HiredEmployeeAsync(EmployeeModel employee)
         {
-            var count = this.employeeRepository.AllAsNoTracking()
-                .OrderByDescending(x => x.Id).FirstOrDefault().Id;
+            var count = this.employeeRepository.AllAsNoTracking().Count();
 
             var newEmployee = new Employee()
             {
@@ -66,6 +67,7 @@
                 Position = employee.Position,
                 ImageURL = employee.ImageURL,
                 ServiceId = employee.ServiceId,
+                Service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId),
                 DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
             };
             await this.employeeRepository.AddAsync(newEmployee);

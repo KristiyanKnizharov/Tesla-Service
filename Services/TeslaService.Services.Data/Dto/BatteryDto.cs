@@ -4,6 +4,7 @@
 
     public class BatteryDto
     {
+        public string Id { get; set; }
         public BatteryStatus Status { get; set; }
 
         public string SoftwareVersion { get; set; }
