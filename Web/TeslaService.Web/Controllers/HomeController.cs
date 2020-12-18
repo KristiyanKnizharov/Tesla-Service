@@ -25,6 +25,7 @@
             var partsCount = this.homeService.CountParts();
             var countpartsTypes = this.homeService.CountTypesOfParts();
             var employeesCount = this.homeService.CountEmployees();
+            var batteryCount = this.homeService.CountBatteries();
 
             var info = new IndexViewModel()
             {
@@ -33,6 +34,7 @@
                 PartsCount = partsCount,
                 CountTypesOfParts = countpartsTypes,
                 EmployeesCount = employeesCount,
+                BatteriesCount = batteryCount,
             };
 
             return this.View(info);

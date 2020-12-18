@@ -65,12 +65,10 @@
             {
                 return this.ValidationProblem("You set date from future!");
             }
-
-            WebRequest webRequest = WebRequest.Create(input.ImageURL);
-            WebResponse webResponse;
             try
             {
-                webResponse = webRequest.GetResponse();
+                WebRequest webRequest = WebRequest.Create(input.ImageURL);
+                WebResponse webResponse = webRequest.GetResponse();
             }
             catch //// If exception thrown then couldn't get response from address
             {

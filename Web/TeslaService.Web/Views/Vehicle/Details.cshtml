@@ -33,17 +33,19 @@
                     <p>@Model.DateOfPurchase.Date.ToString("D")</p>
                     <hr />
                     <h3 class="my-3">Battery features</h3>
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">Dropdown</button>
-                        <div class="dropdown-menu text-center">
-                            <a class="dropdown-item">Health: @Model.Battery.Status</a>
-                            <a class="dropdown-item">@Model.Battery.HorsePower HP</a>
-                            <a class="dropdown-item">@Model.Battery.KilowattHour kW</a>
-                            <a class="dropdown-item">@Model.Battery.Mileage KM</a>
-                            <a class="dropdown-item">@Model.Battery.Range KM</a>
-                            <a class="dropdown-item">@Model.Battery.SoftwareVersion</a>
+                    <section class="mt-5">
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">More</button>
+                            <div class="dropdown-menu text-center">
+                                <a class="dropdown-item">Health: @Model.Battery.Status</a>
+                                <a class="dropdown-item">@Model.Battery.HorsePower HP</a>
+                                <a class="dropdown-item">@Model.Battery.KilowattHour kW</a>
+                                <a class="dropdown-item">@Model.Battery.Mileage KM</a>
+                                <a class="dropdown-item">@Model.Battery.Range KM</a>
+                                <a class="dropdown-item">@Model.Battery.SoftwareVersion</a>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                     <hr />
                     <h3 class="my-3">Details</h3>
                     <div>

@@ -45,7 +45,6 @@
 
             var newBattery = new Battery()
             {
-                Id = vehicleId,
                 Status = TeslaService.Data.Models.Enum.BatteryStatus.Excellent,
                 SoftwareVersion = dto.SoftwareVersion,
                 Mileage = dto.Mileage,
@@ -57,23 +56,6 @@
             this.vehicleRepository.SaveChangesAsync();
         }
 
-        public Insurance CreateInsurance(string vehicleId)
-        {
-            var dateUtcNow = DateTime.UtcNow.Date.ToString("dd/MM/yyyy");
-            var dateInsuranceEnd = DateTime.UtcNow.Date.AddYears(1).ToString("dd/MM/yyyy");
-            var currVehicleVIN = this.vehicleRepository.All().Where(x => x.Id == vehicleId).Select(x => x.Id).ToString();
-            var insurance = new Insurance()
-            {
-                VinNumber = currVehicleVIN,
-                DateOfStart = dateUtcNow,
-                DateOfEnd = dateInsuranceEnd,
-                Description = $"Insurance is valid from {dateUtcNow} to {dateInsuranceEnd}.The Tesla company is always there when you need help. Contact: EUPress@tesla.com",
-            };
-            this.insuranceRepository.AddAsync(insurance);
-
-            return insurance;
-        }
-
         public void CreateVehicle(string userId, CreateVehicleModel vehicle)
         {
             if (this.userRepository.All().Any(x => x.Id == userId))
@@ -81,6 +63,10 @@
                 var currBattery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId);
                 var currInsurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId);
                 var currService = this.serviceRepository.All().FirstOrDefault(x => x.Id == vehicle.ServiceId);
+                if (currBattery == null || currInsurance == null || currService == null)
+                {
+                    return;
+                }
 
                 var currVehicle = new Vehicle()
                 {
@@ -166,6 +152,23 @@
                 .Any(x => x.Id == insuranceId);
         }
 
+        public Insurance CreateInsurance(string vehicleId)
+        {
+            var dateUtcNow = DateTime.UtcNow.Date.ToString("dd/MM/yyyy");
+            var dateInsuranceEnd = DateTime.UtcNow.Date.AddYears(1).ToString("dd/MM/yyyy");
+            var currVehicleVIN = this.vehicleRepository.All().Where(x => x.Id == vehicleId).Select(x => x.Id).ToString();
+            var insurance = new Insurance()
+            {
+                VinNumber = currVehicleVIN,
+                DateOfStart = dateUtcNow,
+                DateOfEnd = dateInsuranceEnd,
+                Description = $"Insurance is valid from {dateUtcNow} to {dateInsuranceEnd}.The Tesla company is always there when you need help. Contact: EUPress@tesla.com",
+            };
+            this.insuranceRepository.AddAsync(insurance);
+
+            return insurance;
+        }
+
         public IEnumerable<DetailsVehicleModel> GetAllVehicles(string userId)
         {
             var user = this.userRepository.AllAsNoTracking()
@@ -173,11 +176,8 @@
             var vehicles = this.vehicleRepository.All().FirstOrDefault();
             var battery = this.batteryRepository.All().FirstOrDefault();
 
-            // var userVehicles = this.userRepository.All()
-            //    .Where(u => u.Id == userId);
-
-            // TODO: Battery work only with default one!
-            var batteryInfo = this.batteryRepository.All().Where(i => i.Id == battery.Id).Select(b => new InfoBatteryModel()
+            var batteryInfo = this.batteryRepository.All().Where(i => i.Id == battery.Id)
+                .Select(b => new InfoBatteryModel()
             {
                 HorsePower = b.HorsePower,
                 KilowattHour = b.KilowattHour,
@@ -186,7 +186,8 @@
                 SoftwareVersion = b.SoftwareVersion,
                 Status = b.Status,
             });
-            var allVehicles = this.vehicleRepository.All().Where(x => x.UserId == user.Id).Select(c => new DetailsVehicleModel()
+            var allVehicles = this.vehicleRepository.All().Where(x => x.UserId == user.Id)
+                .Select(c => new DetailsVehicleModel()
                 {
                     Id = c.Id,
                     VehicleModel = c.VehicleModel,

@@ -10,6 +10,8 @@
 
         public int EmployeesCount { get; set; }
 
+        public int BatteriesCount { get; set; }
+
         public int CountTypesOfParts { get; set; }
     }
 }

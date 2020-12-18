@@ -7,6 +7,7 @@
     public class InfoBatteryModel
     {
         public string Id { get; set; }
+
         public BatteryStatus Status { get; set; }
 
         [Required]
@@ -14,19 +15,19 @@
         public string SoftwareVersion { get; set; }
 
         [Required]
-        [MaxLength(10)]
-        public double Mileage { get; set; }
+        [Range(1, 999999999)]
+        public int Mileage { get; set; }
 
         [Required]
-        [MaxLength(5)]
+        [Range(1, 9999)]
         public int HorsePower { get; set; }
 
         [Required]
-        [MaxLength(5)]
+        [Range(1, 9999)]
         public int KilowattHour { get; set; }
 
         [Required]
-        [MaxLength(5)]
+        [Range(1, 9999)]
         public int Range { get; set; }
     }
 }

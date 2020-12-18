@@ -10,7 +10,7 @@ using TeslaService.Data;
 namespace TeslaService.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201214213724_InitialCreate")]
+    [Migration("20201217232623_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,8 +264,8 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("int")
                         .HasMaxLength(5);
 
-                    b.Property<double>("Mileage")
-                        .HasColumnType("float")
+                    b.Property<int>("Mileage")
+                        .HasColumnType("int")
                         .HasMaxLength(10);
 
                     b.Property<int>("Range")
@@ -274,14 +274,11 @@ namespace TeslaService.Data.Migrations
 
                     b.Property<string>("SoftwareVersion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(36)")
+                        .HasMaxLength(36);
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -339,18 +336,11 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("VehicleId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("VinNumber")
                         .HasColumnType("nvarchar(30)")
                         .HasMaxLength(30);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("VehicleId")
-                        .IsUnique()
-                        .HasFilter("[VehicleId] IS NOT NULL");
 
                     b.ToTable("Insurances");
                 });
@@ -460,7 +450,7 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InsuranceId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
@@ -476,9 +466,9 @@ namespace TeslaService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BatteryId")
-                        .IsUnique()
-                        .HasFilter("[BatteryId] IS NOT NULL");
+                    b.HasIndex("BatteryId");
+
+                    b.HasIndex("InsuranceId");
 
                     b.HasIndex("ServiceId");
 
@@ -566,13 +556,6 @@ namespace TeslaService.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TeslaService.Data.Models.Insurance", b =>
-                {
-                    b.HasOne("TeslaService.Data.Models.Vehicle", "Vehicle")
-                        .WithOne("Insurance")
-                        .HasForeignKey("TeslaService.Data.Models.Insurance", "VehicleId");
-                });
-
             modelBuilder.Entity("TeslaService.Data.Models.Part", b =>
                 {
                     b.HasOne("TeslaService.Data.Models.Vehicle", null)
@@ -596,8 +579,12 @@ namespace TeslaService.Data.Migrations
             modelBuilder.Entity("TeslaService.Data.Models.Vehicle", b =>
                 {
                     b.HasOne("TeslaService.Data.Models.Battery", "Battery")
-                        .WithOne("Vehicle")
-                        .HasForeignKey("TeslaService.Data.Models.Vehicle", "BatteryId");
+                        .WithMany()
+                        .HasForeignKey("BatteryId");
+
+                    b.HasOne("TeslaService.Data.Models.Insurance", "Insurance")
+                        .WithMany()
+                        .HasForeignKey("InsuranceId");
 
                     b.HasOne("TeslaService.Data.Models.Service", "Service")
                         .WithMany("Vehicles")

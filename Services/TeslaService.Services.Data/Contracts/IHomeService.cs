@@ -2,10 +2,16 @@
 {
     public interface IHomeService
     {
+        int CountParts();
+
+        int CountTypesOfParts();
+
         int CountUsers();
 
         int CountVehicles();
 
-        int CountParts();
+        int CountBatteries();
+
+        int CountEmployees();
     }
 }

@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
     using TeslaService.Services.Data.Contracts;
     using TeslaService.Web.ViewModels.Employee;
 
@@ -28,14 +29,19 @@
 
         [Authorize]
         [HttpPost]
-        public IActionResult Hire(EmployeeModel employeeModel)
+        public async Task<IActionResult> Hire(EmployeeModel employeeModel)
         {
             if (this.employeeService.IsTheEmpoyeeExist(employeeModel.FirstName + " " + employeeModel.LastName))
             {
-                return this.ValidationProblem("Employee with that name exist!");
+                this.ModelState.AddModelError("Employee", "Employee with that name exist!");
             }
 
-            this.employeeService.HiredEmployeeAsync(employeeModel);
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            await this.employeeService.HiredEmployeeAsync(employeeModel);
             return this.Redirect("/Employee/All");
         }
     }

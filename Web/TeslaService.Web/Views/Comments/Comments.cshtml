@@ -1,0 +1,200 @@
+﻿<html lang="en">
+<head>
+    <meta charset="utf-8" />
+</head>
+<body class="vw-100 vh-100 overflow-auto" id="hero-comments">
+
+    <!-- Personal information -->
+    <header class="masthead">
+        <div class="container h-100">
+            <div class="row align-items-center justify-content-center text-center">
+                <div class="col-lg-10 align-self-end">
+                    <br />
+                    <h1 class="text-uppercase text-black-50 font-weight-bold text-center">Write your opinion about our service work</h1>
+                    <hr class="divider col-lg-1" />
+                </div>
+                <div class="col-lg-8 align-self-baseline">
+                </div>
+            </div>
+            <div class="comment">
+                <br>
+                <div class="container">
+                    <input id="username" class="input-group" type="text" placeholder="Name:">
+                    <br />
+                    <textarea class="textinput" id="message" placeholder="Comment"></textarea>
+                    
+                    <div class="buttons-list">
+                        <br />
+                        <button id="post-button" class="btn btn-dark" onclick="addComment()"> Post </button>
+                        @if (this.User.Identity.IsAuthenticated)
+                        {
+                            <button class="btn btn-dark" onclick="removeComments()"> Remove comments</button>
+                        }
+                    </div>
+                </div>
+                <br />
+                <!-- Comments Section -->
+                <section class="bg-light" id="comment-section">
+                    <!-- COMMENT TEMPLATE -->
+                    <!-- <div class="comment-element">
+                        <div class="comment-header">
+                            <span>Kristian says:</span>
+                            <span>30/11/2020</span>
+                        </div>
+                        <hr>
+                        <div class="comment-body">
+                            Elon is a billionaire
+                        </div>
+                    </div> -->
+                </section>
+            </div>
+            <br>
+        </div>
+    </header>
+    <header>
+        <script type="text/javascript">var titles = [];
+            var titleInput = document.getElementById("title");
+            var messageBox = document.getElementById("display");
+
+            // ######################################################
+            // ############# READ FROM HERE #########################
+            let comments = []
+
+            // If there are no comments initialize an empty array
+            initLocalStorage();
+
+            // Retrieve the comments from localStorage
+            comments = JSON.parse(localStorage.getItem("comments"))
+
+            // Select the textarea
+            let textArea = document.getElementById("message")
+
+            // Select username
+            let username = document.getElementById("username")
+
+            // Select the "comments" section
+            let commentSection = document.getElementById("comment-section")
+
+            // Display stored comments
+            renderComments();
+
+            function addComment(){
+
+                // Create comment
+                const comment = {
+                    username: username.value,
+                    text:textArea.value,
+                    date: new Date().toJSON().slice(0,10).replace(/-/g,'/')
+                }
+
+                // Store comment in comments array
+
+                comments.push(comment);
+
+                // Generate HTML for the comment
+                const commentHTML = generateCommentHTML(comment)
+
+                // Dynamically update the comment section
+                commentSection.innerHTML += commentHTML;
+
+                // Reset input fields
+                textArea.value=""
+                username.value=""
+
+                // Ovewrite old comments list with the updated list
+                localStorage.setItem("comments",JSON.stringify(comments))
+            }
+
+
+            function renderComments(){
+                comments.forEach((comment)=>{
+                    //Generate HTML for the comment
+                    const commentHTML = generateCommentHTML(comment);
+
+                    // Update the comment section
+                    commentSection.innerHTML += commentHTML;
+                })
+            }
+
+
+            function generateCommentHTML(comment){
+                return `<div class="comment-element">
+                        <div class="comment-header">
+                            <span>${comment.username}, Date:</span>
+                            <span">${comment.date}</span>
+                        </div>
+                        <div class="comment-body">
+                            ${comment.text}
+                        </div>
+                        <hr style="border-color: midnightblue" >
+                    </div>`
+            }
+
+
+            function initLocalStorage(){
+                // If there are no comments stored, initialize them as an empty array
+                if(!localStorage.getItem("comments")){
+                    // Initialize comments as an empty array
+                    localStorage.setItem("comments",JSON.stringify(comments))
+                }
+            }
+
+            // Removes comments from permanent storage
+            function removeComments(){
+                localStorage.removeItem("comments")
+                comments = []
+                commentSection.innerHTML=""
+            }
+
+            // function Allow() {
+            //     if (!user.title.value.match(/[a-zA-Z]$/) && user.title.value != "") {
+            //         user.title.value = "";
+            //         alert("Please Enter only alphabets");
+            //     }
+            //     window.location.reload();
+            // }
+
+
+
+            // function insert() {
+            //     var message = $('textarea#message').val();
+            //     titles.push(message);
+            //     clearAndShow();
+            // }
+            // function clearAndShow() {
+            //     titleInput.value = "";
+            //     messageBox.innerHTML = "";
+            //     messageBox.innerHTML += " " + titles.join("<br/> ") + "<br/>";
+            // }
+            // function WriteToFile(passForm) {
+            //     set fso = CreateObject("Scripting.FileSystemObject");
+            //     set s = fso.CreateTextFile("commentsfile.txt", True);
+            //     s.writeline(document.passForm.input1.value);
+            //     s.Close();
+            // }
+            // function Download(filename) {
+            //     var pom = document.createElement('a');
+            //     pom.setAttribute('href', 'data:text/plain;charset=utf-8,' +
+
+            //         encodeURIComponent(text));
+            //     pom.setAttribute('download', filename);
+
+            //     pom.style.display = 'none';
+            //     document.body.appendChild(pom);
+
+            //     pom.click();
+
+            //     document.body.removeChild(pom);
+            // }
+        </script>
+    </header>
+    <script src="js/scripts.js"></script>
+    <script src="js/commentsServer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+</body>
+</html>
+
+

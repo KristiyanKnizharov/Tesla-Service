@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
+    using System;
     using TeslaService.Services.Data.Contracts;
     using TeslaService.Web.ViewModels.Insurance;
 
@@ -27,7 +27,14 @@
         {
             if (!this.insuranceService.IsItInsuranceCreated(iim.Id))
             {
-                this.insuranceService.CreateInsuranceAsync(iim);
+                try
+                {
+                    this.insuranceService.CreateInsuranceAsync(iim);
+                }
+                catch (Exception)
+                {
+                    this.BadRequest();
+                }
             }
 
             return this.Redirect("/Insurance/All");

@@ -6,14 +6,12 @@
     ViewData["Title"] = "Create vehicle";
 }
 
-@*<h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i> Create Vehicle</h1>*@
-
 <br />
 
 <body class="vw-100 vh-100 overflow-auto"id="hero">
     <form method="post" class="col-md-6 offset-md-3"
           enctype="multipart/form-data">
-        <h1>@this.ViewData["Title"]</h1>
+        <h1 class="text-center" style="font-weight: bold">@this.ViewData["Title"]</h1>
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="VehicleType"></label>

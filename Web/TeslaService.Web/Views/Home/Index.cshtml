@@ -6,16 +6,22 @@
 <body class="vw-100 vh-100 overflow-auto" id="hero">
     <div class="text-center">
 
-        <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-
+        <h1 class="" style="font-weight: 700">Welcome to @GlobalConstants.SystemName!</h1>
         <br /><br /><br />
         <table class="table table-dark">
             <tbody>
                 <tr>
                     <th>Register users: @Model.UsersCount</th>
                     <th>Register vehicles: @Model.VehiclesCount</th>
+                    <th>Register batteries: @Model.BatteriesCount</th>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-dark">
+            <tbody>
+                <tr>
                     <th>Register parts: @Model.PartsCount</th>
-                    @*<th>Register parts: @Model.CountTypesOfParts</th>*@
+                    <th>Type parts: @Model.CountTypesOfParts</th>
                     <th>Register employees: @Model.EmployeesCount</th>
                 </tr>
             </tbody>

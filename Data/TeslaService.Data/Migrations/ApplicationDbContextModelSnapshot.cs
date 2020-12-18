@@ -262,8 +262,8 @@ namespace TeslaService.Data.Migrations
                         .HasColumnType("int")
                         .HasMaxLength(5);
 
-                    b.Property<double>("Mileage")
-                        .HasColumnType("float")
+                    b.Property<int>("Mileage")
+                        .HasColumnType("int")
                         .HasMaxLength(10);
 
                     b.Property<int>("Range")

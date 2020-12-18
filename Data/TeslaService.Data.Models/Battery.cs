@@ -23,7 +23,7 @@
 
         [Required]
         [MaxLength(10)]
-        public double Mileage { get; set; }
+        public int Mileage { get; set; }
 
         [Required]
         [MaxLength(5)]

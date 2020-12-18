@@ -1,11 +1,12 @@
 ﻿namespace TeslaService.Web.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.Linq;
     using TeslaService.Services.Data.Contracts;
     using TeslaService.Web.ViewModels.Battery;
+
     public class BatteryController : BaseController
     {
         private readonly IBatteryService batteryService;
@@ -23,9 +24,9 @@
 
         [Authorize]
         [HttpPost]
-        public IActionResult Create(InfoBatteryModel ibm)
+        public async Task<IActionResult> Create(InfoBatteryModel ibm)
         {
-            this.batteryService.CreateBatteryAsync(ibm);
+            await this.batteryService.CreateBatteryAsync(ibm);
             return this.Redirect("/Battery/All");
         }
 

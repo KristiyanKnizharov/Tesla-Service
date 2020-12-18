@@ -71,12 +71,25 @@ body {
     line-height: 60px; /* Vertically center the text there */
 }
 
+label{
+    font-weight: bold;
+}
+
 /* Service page */
 
 #hero {
     width: auto;
     height: auto;
     background: url("https://electrek.co/wp-content/uploads/sites/3/2016/02/tesla-service-e1455120603609.jpg?quality=82&strip=all") top right;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+#hero-comments {
+    width: auto;
+    height: auto;
+    background: url("https://i.pinimg.com/originals/6c/c6/a7/6cc6a7370f4f50870641389870f92379.jpg") top right;
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -89,7 +102,8 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    filter: blur(6px);
+    filter: blur(1px);
+    -webkit-filter: blur(1px);
 }
 
 /* Employees page */

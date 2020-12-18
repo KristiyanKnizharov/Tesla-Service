@@ -9,7 +9,7 @@
 
         public string SoftwareVersion { get; set; }
 
-        public double Mileage { get; set; }
+        public int Mileage { get; set; }
 
         public int HorsePower { get; set; }
 

@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using TeslaService.Data.Common.Repositories;
     using TeslaService.Data.Models;
     using TeslaService.Services.Data.Contracts;
@@ -26,9 +27,14 @@
 
         public async Task CreateInsuranceAsync(InfoInsuranceModel insuranceModel)
         {
+            int result = DateTime.Compare(insuranceModel.DateOfStart, insuranceModel.DateOfEnd);
+            if (result >= 0)
+            {
+                throw new ArgumentException("Not valid date!");
+            }
+
             var insurance = new Insurance()
             {
-                Id = insuranceModel.Id,
                 VinNumber = insuranceModel.VinNumber,
                 DateOfStart = insuranceModel.DateOfStart.ToString("d"),
                 DateOfEnd = insuranceModel.DateOfEnd.ToString("d"),
@@ -50,8 +56,8 @@
             {
                 Id = x.Id,
                 VinNumber = x.VinNumber,
-                DateOfStart = DateTime.UtcNow.ToString("d"),
-                DateOfEnd = DateTime.UtcNow.ToString("d"),
+                DateOfStart = x.DateOfStart,
+                DateOfEnd = x.DateOfEnd,
                 Description = x.Description,
             });
 

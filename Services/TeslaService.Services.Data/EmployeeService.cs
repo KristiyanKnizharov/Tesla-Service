@@ -58,6 +58,7 @@
         public async Task HiredEmployeeAsync(EmployeeModel employee)
         {
             var count = this.employeeRepository.AllAsNoTracking().Count();
+            var service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId);
 
             var newEmployee = new Employee()
             {
@@ -67,7 +68,7 @@
                 Position = employee.Position,
                 ImageURL = employee.ImageURL,
                 ServiceId = employee.ServiceId,
-                Service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId),
+                //Service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId),
                 DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
             };
             await this.employeeRepository.AddAsync(newEmployee);
