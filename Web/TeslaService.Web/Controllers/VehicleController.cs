@@ -30,8 +30,6 @@
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            //// Insert user from biscuit
-            //// var userId = this.User.FindFirst(ClaimType.NameIdentifier).Value;
             var user = await this.userManager.GetUserAsync(this.User);
             var allVehicles = this.vehicleService.GetAllVehicles(user.Id);
 
@@ -68,7 +66,7 @@
             try
             {
                 WebRequest webRequest = WebRequest.Create(input.ImageURL);
-                WebResponse webResponse = webRequest.GetResponse();
+                WebResponse webResponse = await webRequest.GetResponseAsync();
             }
             catch //// If exception thrown then couldn't get response from address
             {
@@ -83,7 +81,6 @@
         public IActionResult Details(string id)
         {
             var vehicleDto = this.vehicleService.Details(id);
-
             return this.View(vehicleDto);
         }
 

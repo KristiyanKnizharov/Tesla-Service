@@ -29,7 +29,7 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Hire(EmployeeModel employeeModel)
+        public IActionResult Hire(EmployeeModel employeeModel)
         {
             if (this.employeeService.IsTheEmpoyeeExist(employeeModel.FirstName + " " + employeeModel.LastName))
             {
@@ -41,7 +41,7 @@
                 return this.View();
             }
 
-            await this.employeeService.HiredEmployeeAsync(employeeModel);
+            this.employeeService.HiredEmployeeAsync(employeeModel);
             return this.Redirect("/Employee/All");
         }
     }

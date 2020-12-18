@@ -12,12 +12,12 @@
 
     public class EmployeeService : IEmployeeService
     {
-        private const int ServiceNumber = 1;
-
         private readonly IRepository<Employee> employeeRepository;
         private readonly IRepository<Service> serviceRepository;
 
-        public EmployeeService(IRepository<Employee> employeeRepository, IRepository<Service> serviceRepository)
+        public EmployeeService(
+            IRepository<Employee> employeeRepository,
+            IRepository<Service> serviceRepository)
         {
             this.employeeRepository = employeeRepository;
             this.serviceRepository = serviceRepository;
@@ -55,24 +55,24 @@
             return allEmployee;
         }
 
-        public async Task HiredEmployeeAsync(EmployeeModel employee)
+        public void HiredEmployeeAsync(EmployeeModel employee)
         {
             var count = this.employeeRepository.AllAsNoTracking().Count();
-            var service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId);
+            var service = this.serviceRepository.All()
+                .FirstOrDefault(x => x.Id == employee.ServiceId);
 
             var newEmployee = new Employee()
             {
-                Id = count + 1,
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 Position = employee.Position,
                 ImageURL = employee.ImageURL,
                 ServiceId = employee.ServiceId,
-                //Service = this.serviceRepository.AllAsNoTracking().FirstOrDefault(x => x.Id == employee.ServiceId),
+                Service = service,
                 DateOfJoin = DateTime.UtcNow.Date.ToString("dd/MM/yyyy"),
             };
-            await this.employeeRepository.AddAsync(newEmployee);
-            await this.employeeRepository.SaveChangesAsync();
+            this.employeeRepository.AddAsync(newEmployee).GetAwaiter().GetResult();
+            this.employeeRepository.SaveChangesAsync().GetAwaiter().GetResult();
         }
 
         public bool IsTheEmpoyeeExist(string fullName)

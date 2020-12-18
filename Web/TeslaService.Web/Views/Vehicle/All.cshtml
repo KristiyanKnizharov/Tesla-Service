@@ -2,11 +2,7 @@
 @{
     ViewData["Title"] = "My Vehicles";
 }
-
-
-
 <body class="vw-100 vh-100 overflow-auto" id="hero">
-    <h1 class="display-4 text-center"><i class="fas fa-car" style="color: darkorange"></i>@this.ViewData["Title"]</h1>
     <br />
     <div class="text-center">
         <div class="">
@@ -26,20 +22,10 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Category: @vehicle.VehicleType</li>
                         <li class="list-group-item">Date of purchase: @vehicle.DateOfPurchase.Date.ToString("d")</li>
-                        @*@if (User.Identity.IsAuthenticated)
-                        {
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <li class="list-group-item text-center">
-                                    <a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-edit" style="color: darkorange"></i>Edit</a>
-                                    <a asp-action="Delete" asp-controller="Vehilce" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-trash" style="color: darkorange"></i> Delete</a>
-                                </li>
-                            }
-                        }*@
                     </ul>
                     <div class="row">
                         <div class="card-body text-center alert-heading" style="color: #4CAF50">
-                            <a asp-action="Details" asp-controller="Vehicle" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-info-circle" style="color: darkorange"></i> More</a>
+                            <a asp-action="Details" asp-controller="Vehicle" asp-route-id="@vehicle.Id" class="btn"><i class="fas fa-info-circle" style="color: darkorange"></i>More</a>
                         </div>
                     </div>
                 </div>

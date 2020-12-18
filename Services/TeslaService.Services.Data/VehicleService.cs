@@ -60,9 +60,10 @@
         {
             if (this.userRepository.All().Any(x => x.Id == userId))
             {
-                var currBattery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId);
-                var currInsurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId);
+                var currBattery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId.Trim());
+                var currInsurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId.Trim());
                 var currService = this.serviceRepository.All().FirstOrDefault(x => x.Id == vehicle.ServiceId);
+
                 if (currBattery == null || currInsurance == null || currService == null)
                 {
                     return;
@@ -75,17 +76,17 @@
                     ImageURL = vehicle.ImageURL,
                     DateOfPurchase = vehicle.DateOfPurchase,
                     BatteryId = vehicle.BatteryId,
-                    Battery = this.batteryRepository.All().FirstOrDefault(x => x.Id == vehicle.BatteryId),
+                    Battery = currBattery,
                     UserId = userId,
                     User = this.userRepository.All().FirstOrDefault(x => x.Id == userId),
                     Description = vehicle.Description,
                     InsuranceId = vehicle.InsuranceId,
-                    Insurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == vehicle.InsuranceId),
+                    Insurance = currInsurance,
                     ServiceId = vehicle.ServiceId,
-                    Service = this.serviceRepository.All().FirstOrDefault(x => x.Id == vehicle.ServiceId),
+                    Service = currService,
                 };
-                this.vehicleRepository.AddAsync(currVehicle);
-                this.vehicleRepository.SaveChangesAsync();
+                this.vehicleRepository.AddAsync(currVehicle).GetAwaiter().GetResult();
+                this.vehicleRepository.SaveChangesAsync().GetAwaiter().GetResult();
             }
         }
 
@@ -150,23 +151,6 @@
         {
             return this.insuranceRepository.All()
                 .Any(x => x.Id == insuranceId);
-        }
-
-        public Insurance CreateInsurance(string vehicleId)
-        {
-            var dateUtcNow = DateTime.UtcNow.Date.ToString("dd/MM/yyyy");
-            var dateInsuranceEnd = DateTime.UtcNow.Date.AddYears(1).ToString("dd/MM/yyyy");
-            var currVehicleVIN = this.vehicleRepository.All().Where(x => x.Id == vehicleId).Select(x => x.Id).ToString();
-            var insurance = new Insurance()
-            {
-                VinNumber = currVehicleVIN,
-                DateOfStart = dateUtcNow,
-                DateOfEnd = dateInsuranceEnd,
-                Description = $"Insurance is valid from {dateUtcNow} to {dateInsuranceEnd}.The Tesla company is always there when you need help. Contact: EUPress@tesla.com",
-            };
-            this.insuranceRepository.AddAsync(insurance);
-
-            return insurance;
         }
 
         public IEnumerable<DetailsVehicleModel> GetAllVehicles(string userId)

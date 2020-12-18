@@ -16,8 +16,6 @@
 
         void AddNewBattery(string vehicleId, BatteryDto dto);
 
-        Insurance CreateInsurance(string vehicleId);
-
         VehicleDto Details(string id);
 
         bool IsItVehicleCreated(string vehicleId);

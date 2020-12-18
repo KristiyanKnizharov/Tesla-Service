@@ -7,7 +7,7 @@
 
     public interface IEmployeeService
     {
-        Task HiredEmployeeAsync(EmployeeModel newEmployee);
+        void HiredEmployeeAsync(EmployeeModel newEmployee);
 
         Task FiredEmployeeAsync(int employeeId);
 

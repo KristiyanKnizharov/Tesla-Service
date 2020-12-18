@@ -1,55 +1,46 @@
-﻿@using TeslaService.Common
-@using TeslaService.Data.Models
+﻿@using TeslaService.Data.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 
-<body class="vw-100 vh-100 overflow-auto" id="hero">
-    <section id="" class="">
+<body class="vw-100 vh-100 overflow-auto" id="emp">
+    <section id="" class="list-group-item">
         <br />
         <div class="container d-flex flex-column align-items-center aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
-            @if (this.User.Identity.IsAuthenticated)
-            {
-                <h1>My Service</h1>
-            }
-            else
-            {
-                <h1>Service</h1>
-            }
-            <h2 class="text-center">Here you can find stock parts, our battery and employees.</h2>
+            <h1 class="text-center">My Service</h1>
+            <h2 class="text-center">Here you can find stock parts, our battery, employees and insurance.</h2>
 
             <br />
 
             @if (this.User.Identity.IsAuthenticated)
             {
-                <div class="text-center">
-                    <div class="">
-                        <a asp-area="" asp-controller="Warehouse" asp-action="All" class="buttonCreate">Warehouse</a>
+                <div>
+                    <div class="text-center">
+                        <div>
+                            <a class="" asp-area="" asp-controller="Warehouse" asp-action="All" class="buttonCreate">Warehouse</a>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="text-center">
-                    <div class="">
-                        <a asp-area="" asp-controller="Employee" asp-action="All" class="buttonCreate">All Employees</a>
+                    <br />
+                    <div class="text-center">
+                        <div>
+                            <a class="" asp-area="" asp-controller="Employee" asp-action="All" class="buttonCreate">All Employees</a>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="text-center">
-                    <div class="">
-                        <a asp-area="" asp-controller="Battery" asp-action="All" class="buttonCreate">All Batteries</a>
+                    <br />
+                    <div class="text-center">
+                        <div>
+                            <a class="" asp-area="" asp-controller="Battery" asp-action="All" class="buttonCreate">All Batteries</a>
+                        </div>
                     </div>
-                </div>
-                <br />
-                <div class="text-center">
-                    <div class="">
-                        <a asp-area="" asp-controller="Insurance" asp-action="All" class="buttonCreate">All Insurances</a>
+                    <br />
+                    <div class="text-center">
+                        <div>
+                            <a class="" asp-area="" asp-controller="Insurance" asp-action="All" class="buttonCreate">All Insurances</a>
+                        </div>
                     </div>
+                    <br />
                 </div>
-
-                @*<div class="nav-item">
-                    <a class="nav-link btn-about" asp-area="" asp-controller="Employee" asp-action="All">All Employees</a>
-                </div>*@
             }
 
             @if (!this.User.Identity.IsAuthenticated)

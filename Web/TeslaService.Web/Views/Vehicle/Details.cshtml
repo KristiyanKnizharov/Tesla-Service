@@ -1,10 +1,7 @@
-﻿@*@model TeslaService.Web.ViewModels.Battery.InfoBatteryModel*@
-@model TeslaService.Services.Data.Dto.VehicleDto
-<!-- ZooMove CSS minified -->
-
+﻿@model TeslaService.Services.Data.Dto.VehicleDto
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+@*<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">*@
 
 @{
     ViewData["Title"] = "Details";
@@ -13,7 +10,7 @@
 <body class="vw-100 vh-100 overflow-auto" id="hero">
     <div style="background-color: whitesmoke">
         <hr />
-        <h1 class="display-4 text-center"> 
+        <h1 class="display-4 text-center">
             @Model.VehicleModel
         </h1>
 
@@ -23,8 +20,6 @@
                 @Model.VehicleType
             </h1>
             <div class="row">
-                @*<figure class="zoo-item" data-zoo-over="true" data-zoo-move="false">
-                    </figure>*@
                 <div class="col-md-7 mx-auto">
                     <img class="img-fluid zoo-img" src="@Model.ImageURL">
                 </div>
@@ -33,19 +28,11 @@
                     <p>@Model.DateOfPurchase.Date.ToString("D")</p>
                     <hr />
                     <h3 class="my-3">Battery features</h3>
-                    <section class="mt-5">
-                        <div class="btn-group" role="group">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">More</button>
-                            <div class="dropdown-menu text-center">
-                                <a class="dropdown-item">Health: @Model.Battery.Status</a>
-                                <a class="dropdown-item">@Model.Battery.HorsePower HP</a>
-                                <a class="dropdown-item">@Model.Battery.KilowattHour kW</a>
-                                <a class="dropdown-item">@Model.Battery.Mileage KM</a>
-                                <a class="dropdown-item">@Model.Battery.Range KM</a>
-                                <a class="dropdown-item">@Model.Battery.SoftwareVersion</a>
-                            </div>
-                        </div>
-                    </section>
+                    <p>
+                        Health: @Model.Battery.Status, @Model.Battery.HorsePower HP, @Model.Battery.KilowattHour kW,
+                        @Model.Battery.Mileage KM
+                    </p>
+                    <p>Range: @Model.Battery.Range KM, Software Version: @Model.Battery.SoftwareVersion</p>
                     <hr />
                     <h3 class="my-3">Details</h3>
                     <div>
@@ -53,16 +40,16 @@
                         <p class="list-group-item">BatteryId: @Model.BatteryId</p>
                         <p class="list-group-item">InsuranceId: @Model.InsuranceId</p>
                     </div>
-                    <h3 class="my-3">Description</h3>
-                    <p>@Model.Description</p>
-                    <br />
+                    @if (@Model.Description != null)
+                    {
+                        <h3 class="my-3">Description</h3>
+                        <p>@Model.Description</p>
+                        <br />
+                    }
                 </div>
             </div>
         </div>
     </div>
-    @*<script>
-        $('.zoo-item').ZooMove();
-    </script>*@
     <script type="text/javascript">
         $(document).ready(function () {
             $('dropdown-toggle').show()
