@@ -11,7 +11,7 @@
     {
         Task CreateBatteryAsync(InfoBatteryModel batteryDto);
 
-        void DeleteBattery(string batteryId);
+        Task DeleteBattery(string batteryId);
 
         bool IsItBatteryCreated(string batteryId);
 

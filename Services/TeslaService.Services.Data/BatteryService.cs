@@ -7,7 +7,6 @@
     using TeslaService.Data.Common.Repositories;
     using TeslaService.Data.Models;
     using TeslaService.Services.Data.Contracts;
-    using TeslaService.Services.Data.Dto;
     using TeslaService.Web.ViewModels.Battery;
 
     public class BatteryService : IBatteryService
@@ -40,13 +39,13 @@
             await this.batteryRepository.SaveChangesAsync();
         }
 
-        public void DeleteBattery(string batteryId)
+        public async Task DeleteBattery(string batteryId)
         {
-            var battery = this.batteryRepository.All().FirstOrDefault(x => x.Id == batteryId);
-            if (battery != null)
-            {
-                this.batteryRepository.Delete(battery);
-            }
+            var battery = this.batteryRepository.All()
+                .FirstOrDefault(x => x.Id == batteryId);
+
+            this.batteryRepository.Delete(battery);
+            await this.batteryRepository.SaveChangesAsync();
         }
 
         public IEnumerable<Battery> GetAllBatteries()
@@ -57,7 +56,8 @@
 
         public bool IsItBatteryCreated(string batteryId)
         {
-            return this.batteryRepository.AllAsNoTracking().Any(x => x.Id == batteryId);
+            return this.batteryRepository.AllAsNoTracking()
+                .Any(x => x.Id == batteryId);
         }
     }
 }

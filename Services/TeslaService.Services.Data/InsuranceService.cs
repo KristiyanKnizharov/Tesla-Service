@@ -44,10 +44,11 @@
             await this.insuranceRepository.SaveChangesAsync();
         }
 
-        public void DeleteInsurance(string insuranceId)
+        public async Task DeleteInsurance(string insuranceId)
         {
             var insurance = this.insuranceRepository.All().FirstOrDefault(x => x.Id == insuranceId);
             this.insuranceRepository.Delete(insurance);
+            await this.insuranceRepository.SaveChangesAsync();
         }
 
         public IEnumerable<AllInsuranceModel> GetAllInsurances()

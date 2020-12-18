@@ -10,7 +10,7 @@
     {
         Task CreateInsuranceAsync(InfoInsuranceModel insuranceModel);
 
-        void DeleteInsurance(string insuranceId);
+        Task DeleteInsurance(string insuranceId);
 
         bool IsItInsuranceCreated(string insuranceId);
 
