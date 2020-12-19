@@ -1,16 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using TeslaService.Data;
-using TeslaService.Data.Common.Repositories;
-using TeslaService.Data.Models;
-using TeslaService.Data.Models.Enum;
-using TeslaService.Data.Repositories;
-using TeslaService.Services.Data.Common;
-using TeslaService.Web.ViewModels.Part;
-using Xunit;
-
-namespace TeslaService.Services.Data.Tests
+﻿namespace TeslaService.Services.Data.Tests
 {
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using TeslaService.Data;
+    using TeslaService.Data.Common.Repositories;
+    using TeslaService.Data.Models;
+    using TeslaService.Data.Models.Enum;
+    using TeslaService.Data.Repositories;
+    using TeslaService.Services.Data.Common;
+    using TeslaService.Web.ViewModels.Part;
+    using Xunit;
+
     public class PartServiceTests
     {
         private readonly IPartService partService;

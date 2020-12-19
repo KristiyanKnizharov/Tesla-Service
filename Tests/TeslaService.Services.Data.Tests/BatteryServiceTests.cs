@@ -31,7 +31,6 @@
             this.batteryService = new BatteryService(this.batteryRepository);
         }
 
-        [Fact]
         public void Dispose()
         {
             this.connection.Database.EnsureDeleted();
@@ -98,9 +97,9 @@
 
             await this.batteryService.CreateBatteryAsync(newBattery);
 
-            var expectResult = this.batteryService.GetAllBatteries().Any(x => x.Id == newBattery.Id);
-
-            Assert.False(expectResult);
+            var expectResult = this.batteryService.IsItBatteryCreated(newBattery.Id);
+            var real = this.batteryRepository.AllAsNoTracking().Any(x => x.Id == newBattery.Id);
+            Assert.Equal(expectResult, real);
         }
 
         [Fact]
